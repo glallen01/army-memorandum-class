@@ -84,7 +84,7 @@
   \lhead{
    \setlength{\unitlength}{1pc}    
    \begin{picture}(0,0)
-   \put(-3,-2.5){\includegraphics[height=1in]{DA_LOGO.png}}
+   \put(-3,-2.5){\includegraphics[height=1in]{DA_LOGO}}
    \end{picture}
   }
   \chead{
