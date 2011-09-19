@@ -47,11 +47,13 @@
 \newcounter{ParNumii}[ParNumi]
 \newcounter{ParNumiii}[ParNumii]
 \newcounter{ParNumiiii}[ParNumiii]
+\newcounter{ParNumiiiii}[ParNumiiii]
 
 \newcommand{\Ni}{\refstepcounter{ParNumi}\noindent\makebox[\parindent][l]{\arabic{ParNumi}. }}
 \newcommand{\Nii}{\refstepcounter{ParNumii}\noindent\hspace{\parindent}\makebox[\parindent][l]{\alph{ParNumii}. }}
 \newcommand{\Niii}{\refstepcounter{ParNumiii}\noindent\hspace{2\parindent}\makebox[\parindent][l]{\roman{ParNumiii}. }}
 \newcommand{\Niiii}{\refstepcounter{ParNumiiii}\noindent\hspace{3\parindent}\makebox[\parindent][l]{(\arabic{ParNumiiii}) }}
+\newcommand{\Niiiii}{\refstepcounter{ParNumiiiii}\noindent\hspace{4\parindent}\makebox[\parindent][l]{(\alph{ParNumiiiii}) }}
 \newcommand{\Nx}[1]{\noindent\hspace{#1\parindent}}
 
 
