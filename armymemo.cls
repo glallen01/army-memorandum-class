@@ -100,7 +100,7 @@
  \thispagestyle{plain}
  \pagestyle{fancy}
  \ \vspace*{12pt}\\      
- \noindent\usebox{\OSYMB}\hfill28 August 2011\\[24pt]
+ \noindent\usebox{\OSYMB}\hfill\today\\[24pt]
  \noindent MEMORANDUM FOR RECORD\\[12pt]
  \noindent SUBJECT: \usebox{\SUBJECT}\\[12pt]
  \setlength{\parskip}{12pt}
