@@ -40,6 +40,11 @@
 \RequirePackage{multicol}
 \RequirePackage[normalem]{ulem}
 
+%Setting penalties for widows and orphans: broken paragraphs with only one line
+%at the top or bottom of the page. This messes up other formatting leaving lots
+%of space at the bottom of some pages that requires manual intervention.
+\widowpenalty=10000
+\clubpenalty=10000
 
 \setlength{\parindent}{2em}
 
