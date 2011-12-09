@@ -43,8 +43,13 @@
 %Setting penalties for widows and orphans: broken paragraphs with only one line
 %at the top or bottom of the page. This messes up other formatting leaving lots
 %of space at the bottom of some pages that requires manual intervention.
+%% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=widows
 \widowpenalty=10000
 \clubpenalty=10000
+%  TODO Possible alternate solution, needs testing:
+%   http://en.wikibooks.org/wiki/LaTeX/Page_Layout#Widows_and_orphans
+%  \setlength{\parskip}{3ex plus 2ex minus 2ex}
+%  Additional reference: http://www.economics.utoronto.ca/osborne/latex/PMAKEUP.HTM
 
 \setlength{\parindent}{2em}
 
