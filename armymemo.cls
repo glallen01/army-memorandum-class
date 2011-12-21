@@ -23,8 +23,11 @@
         pdftex]{scrartcl}
 
 \RequirePackage{fancyhdr}
-\RequirePackage[margin=1in,bottom=0.8in,includefoot]{geometry}
+\RequirePackage[margin=1in]{geometry}
+%\RequirePackage[margin=1in,bottom=0.8in,includefoot]{geometry}
 \RequirePackage{typearea}
+  \setlength{\headheight}{24pt}
+  \setlength{\footskip}{24pt}
 \RequirePackage[absolute]{textpos}
 \RequirePackage[utf8x]{inputenc}		% for windows quotes without having to sed them out
 \RequirePackage[T1]{fontenc}                	% For Times (Nimbus Roman) Font:
@@ -88,29 +91,31 @@
 \setkomafont{disposition}{\normalfont}
 \setkomafont{disposition}{\normalfont}
 
-\newcommand{\AMsethead}{
- \fancypagestyle{plain}{%
-  \fancyhf{} %clear all header and footer fields
-  \lhead{
-   \setlength{\unitlength}{1pc}    
-   \begin{picture}(0,0)
-   \put(-3,-2.5){\includegraphics[height=1in]{DA_LOGO}}
-   \end{picture}
-  }
-  \chead{
-   \usebox{\DEPT}\\\usebox{\UNIT}\\\usebox{\ADDRESS}
-  }
-  \renewcommand{\headrulewidth}{0.0pt}
-  \renewcommand{\footrulewidth}{0.0pt}
- }
- \lhead[]{\newgeometry{margin=1.0in}\usebox{\OSYMB}\\SUBJECT:
- \usebox{\SUBJECT}\\[24pt]}
- \fancyfoot[C]{\thepage}
- \renewcommand{\headrulewidth}{0.0pt}
- \renewcommand{\footrulewidth}{0.0pt}
+\fancypagestyle{plain}{%
+\fancyhf{} %clear all header and footer fields
+\lhead{%
+\setlength{\unitlength}{1pc}    
+\begin{picture}(0,0)
+\put(-3,-2.5){\includegraphics[height=1in]{DA_LOGO}}
+\end{picture}}
+\chead{%
+\usebox{\DEPT}\\\usebox{\UNIT}\\\usebox{\ADDRESS}}
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.0pt}
+}
+
+\fancypagestyle{body}{%
+%\lhead[]{\newgeometry{margin=1.0in,includefoot}\usebox{\OSYMB}\\SUBJECT: \usebox{\SUBJECT}\\[24pt]}
+\lhead[]{\usebox{\OSYMB}\\SUBJECT: \usebox{\SUBJECT}\\}%[24pt]}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.0pt}
+}
  
+
+\newcommand{\AMsethead}{
  \thispagestyle{plain}
- \pagestyle{fancy}
+ \pagestyle{body}
  \ \vspace*{12pt}\\      
  \noindent\usebox{\OSYMB}\hfill\today\\[24pt]
  \noindent MEMORANDUM FOR RECORD\\[12pt]
@@ -118,10 +123,10 @@
  \setlength{\parskip}{12pt}
 }
 
-% #1 
-% #2 
-% #3 
-% #4 
+% #1 Name
+% #2 Rank, Branch
+% #3 Title
+% #4 Enclosures
 \newcommand{\AMsigblock}[4]{
 	\setlength{\parskip}{0pt}
 	\vspace{48pt}
