@@ -23,7 +23,7 @@
         pdftex]{scrartcl}
 
 \RequirePackage{fancyhdr}
-\RequirePackage[margin=1in,includefoot]{geometry}
+\RequirePackage[margin=1in,bottom=0.8in,includefoot]{geometry}
 \RequirePackage{typearea}
 \RequirePackage[absolute]{textpos}
 \RequirePackage[utf8x]{inputenc}		% for windows quotes without having to sed them out
