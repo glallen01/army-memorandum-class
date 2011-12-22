@@ -63,6 +63,8 @@
 \newcounter{ParNumiiiii}[ParNumiiii]
 
 %added \par's for each line to force separation even without linebreaks between \Ni's
+%need to do this differently to force a newline at a \par, but to ignore
+%additional newlines if there's already a separation
 \newcommand{\Ni}{\refstepcounter{ParNumi}\noindent\par\makebox[\parindent][l]{\arabic{ParNumi}. }}
 \newcommand{\Nii}{\refstepcounter{ParNumii}\noindent\par\hspace{\parindent}\makebox[\parindent][l]{\alph{ParNumii}. }}
 \newcommand{\Niii}{\refstepcounter{ParNumiii}\noindent\par\hspace{2\parindent}\makebox[\parindent][l]{\roman{ParNumiii}. }}
