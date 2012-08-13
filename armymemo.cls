@@ -39,6 +39,7 @@
 \RequirePackage{microtype}
 \RequirePackage{ragged2e} \RaggedRight      	% recommended by jurabib for better ragged right
 \RequirePackage{setspace}%\doublespacing    	% turns off in floats and tables
+\singlespacing
 %\RequirePackage{endnotes}
 \RequirePackage{multicol}
 \RequirePackage[normalem]{ulem}
@@ -113,7 +114,10 @@
 \put(-3,-2.5){\includegraphics[height=1in]{DA_LOGO}}
 \end{picture}}
 \chead{%
-\usebox{\DEPT}\\\usebox{\UNIT}\\\usebox{\ADDRESS}}
+%HEADER and SECTION ADDRESS
+\usebox{\DEPT}\\
+\usebox{\UNIT}\\
+\usebox{\ADDRESS}}
 \renewcommand{\headrulewidth}{0.0pt}
 \renewcommand{\footrulewidth}{0.0pt}
 }
@@ -127,13 +131,14 @@
 }
 
 \newcommand{\AMsethead}{
+ \setlength{\parskip}{0pt}
  \thispagestyle{plain}
  \pagestyle{body}
  \ \vspace*{12pt}\\      
- \noindent\usebox{\OSYMB}\hfill\today\\[24pt]
- \noindent \usebox{\MEMOFOR}\\[12pt]
- \noindent SUBJECT: \usebox{\SUBJECT}\\[12pt]
- \setlength{\parskip}{12pt}
+ \noindent\usebox{\OSYMB}\hfill\today\\\ \\
+ \noindent\usebox{\MEMOFOR}\\\ \\
+ \noindent SUBJECT: \usebox{\SUBJECT}%\\\ \\\ \\
+ \setlength{\parskip}{12pt}%\vspace*{-24pt}
 }
 
 % #1 Name
