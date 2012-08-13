@@ -87,7 +87,7 @@
 \newsavebox{\MEMOFOR}
 
 % could adjust to add other services or customizable 'dept'
-\newcommand{\AMdept}[1][DEPARTMENT OF THE ARMY]{\sbox{\DEPT}{\textmd{{#1}}}}
+\newcommand{\AMdept}[1]{\sbox{\DEPT}{\textmd{{#1}}}}
 \newcommand{\AMunit}[1]{\sbox{\UNIT}{\headfmt{#1}}}
 \newcommand{\AMaddress}[1]{\sbox{\ADDRESS}{\headfmt{#1}}}
 \newcommand{\AMsymbol}[1]{\sbox{\OSYMB}{#1}}
