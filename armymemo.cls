@@ -66,11 +66,11 @@
 %added \par's for each line to force separation even without linebreaks between \Ni's
 %need to do this differently to force a newline at a \par, but to ignore
 %additional newlines if there's already a separation
-\newcommand{\Ni}{\refstepcounter{ParNumi}\noindent\par\makebox[\parindent][l]{\arabic{ParNumi}. }}
-\newcommand{\Nii}{\refstepcounter{ParNumii}\noindent\par\hspace{\parindent}\makebox[\parindent][l]{\alph{ParNumii}. }}
-\newcommand{\Niii}{\refstepcounter{ParNumiii}\noindent\par\hspace{2\parindent}\makebox[\parindent][l]{\roman{ParNumiii}. }}
-\newcommand{\Niiii}{\refstepcounter{ParNumiiii}\noindent\par\hspace{3\parindent}\makebox[\parindent][l]{(\arabic{ParNumiiii}) }}
-\newcommand{\Niiiii}{\refstepcounter{ParNumiiiii}\noindent\par\hspace{4\parindent}\makebox[\parindent][l]{(\alph{ParNumiiiii}) }}
+\newcommand{\Ni}{\refstepcounter{ParNumi}\noindent\makebox[\parindent][l]{\arabic{ParNumi}. }}
+\newcommand{\Nii}{\refstepcounter{ParNumii}\noindent\hspace{\parindent}\makebox[\parindent][l]{\alph{ParNumii}. }}
+\newcommand{\Niii}{\refstepcounter{ParNumiii}\noindent\hspace{2\parindent}\makebox[\parindent][l]{\roman{ParNumiii}. }}
+\newcommand{\Niiii}{\refstepcounter{ParNumiiii}\noindent\hspace{3\parindent}\makebox[\parindent][l]{(\arabic{ParNumiiii}) }}
+\newcommand{\Niiiii}{\refstepcounter{ParNumiiiii}\noindent\hspace{4\parindent}\makebox[\parindent][l]{(\alph{ParNumiiiii}) }}
 \newcommand{\Nx}[1]{\noindent\hspace{#1\parindent}}
 
 % #0 Department
@@ -84,17 +84,18 @@
 \newsavebox{\UNIT}   
 \newsavebox{\ADDRESS}
 \newsavebox{\OSYMB}  
-\newsavebox{\SUBJECT}
 \newsavebox{\MEMOFOR}
+\newsavebox{\SUBJECT}
+\newcommand{\AMfor}[1]{\renewcommand{\AMfor}{#1}}
+\newcommand{\AMsubject}[1]{\renewcommand{\AMsubject}{#1}}
 
 % could adjust to add other services or customizable 'dept'
 \newcommand{\AMdept}[1]{\sbox{\DEPT}{\textmd{{#1}}}}
 \newcommand{\AMunit}[1]{\sbox{\UNIT}{\headfmt{#1}}}
 \newcommand{\AMaddress}[1]{\sbox{\ADDRESS}{\headfmt{#1}}}
 \newcommand{\AMsymbol}[1]{\sbox{\OSYMB}{#1}}
-\newcommand{\AMsubject}[1]{\sbox{\SUBJECT}{#1}}
-\newcommand{\AMfor}[1]{\sbox{\MEMOFOR}{#1}} 	% need to figure out how to set
-						%default values without breaking template
+%\newcommand{\AMsubject}[1]{\sbox{\SUBJECT}{#1}}
+%\newcommand{\AMfor}[1]{\sbox{\MEMOFOR}{#1}}
 
 %\newcommand{\AMfor}[1][MEMORANDUM FOR RECORD]{\newsavebox{\MEMOFOR}\sbox{\MEMOFOR}{#1}}
 
@@ -123,8 +124,8 @@
 }
 
 \fancypagestyle{body}{%
-%\lhead[]{\newgeometry{margin=1.0in,includefoot}\usebox{\OSYMB}\\SUBJECT: \usebox{\SUBJECT}\\[24pt]}
-\lhead[]{\usebox{\OSYMB}\\SUBJECT: \usebox{\SUBJECT}\\}%[24pt]}
+%\lhead[]{\newgeometry{margin=1.0in,includefoot}\usebox{\OSYMB}\\SUBJECT: \AMsubject\\[24pt]}
+\lhead[]{\usebox{\OSYMB}\\SUBJECT: \AMsubject\\}%[24pt]}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.0pt}
 \renewcommand{\footrulewidth}{0.0pt}
@@ -136,8 +137,8 @@
  \pagestyle{body}
  \ \vspace*{12pt}\\      
  \noindent\usebox{\OSYMB}\hfill\today\\\ \\
- \noindent\usebox{\MEMOFOR}\\\ \\
- \noindent SUBJECT: \usebox{\SUBJECT}%\\\ \\\ \\
+ \noindent \AMfor\\\ \\
+ \noindent SUBJECT: \AMsubject%\\\ \\\ \\
  \setlength{\parskip}{12pt}%\vspace*{-24pt}
 }
 
@@ -150,4 +151,14 @@
 	\vspace{48pt}
 	\noindent\parbox[t]{2in}{\noindent #4}
 	\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}
+}
+\newcommand{\AMMOAsig}[7]{
+	\setlength{\parskip}{0pt}
+	\vspace{48pt}
+	\begin{minipage}{\textwidth}
+	\noindent\parbox[t]{0.45\textwidth}{\noindent #1\\#2\\#3}
+	\hfill\parbox[t]{0.45\textwidth}{\uppercase{#4\\#5}\\#6}
+	\end{minipage}
+	\ \\\vspace{24pt}
+	\noindent\parbox[t]{2in}{\noindent #7}
 }
