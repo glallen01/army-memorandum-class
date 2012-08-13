@@ -63,6 +63,8 @@
 \newcounter{ParNumiiiii}[ParNumiiii]
 
 %added \par's for each line to force separation even without linebreaks between \Ni's
+%need to do this differently to force a newline at a \par, but to ignore
+%additional newlines if there's already a separation
 \newcommand{\Ni}{\refstepcounter{ParNumi}\noindent\par\makebox[\parindent][l]{\arabic{ParNumi}. }}
 \newcommand{\Nii}{\refstepcounter{ParNumii}\noindent\par\hspace{\parindent}\makebox[\parindent][l]{\alph{ParNumii}. }}
 \newcommand{\Niii}{\refstepcounter{ParNumiii}\noindent\par\hspace{2\parindent}\makebox[\parindent][l]{\roman{ParNumiii}. }}
@@ -70,18 +72,30 @@
 \newcommand{\Niiiii}{\refstepcounter{ParNumiiiii}\noindent\par\hspace{4\parindent}\makebox[\parindent][l]{(\alph{ParNumiiiii}) }}
 \newcommand{\Nx}[1]{\noindent\hspace{#1\parindent}}
 
+% #0 Department
 % #1 UNIT
 % #2 Address1
 % #3 Office Symbol
 % #4 Subject
 
+% define the saveboxes for internal use
+\newsavebox{\DEPT}
+\newsavebox{\UNIT}   
+\newsavebox{\ADDRESS}
+\newsavebox{\OSYMB}  
+\newsavebox{\SUBJECT}
+\newsavebox{\MEMOFOR}
+
 % could adjust to add other services or customizable 'dept'
-\newcommand{\AMarmy}{\newsavebox{\DEPT}      \sbox{\DEPT}{\textmd{{DEPARTMENT OF THE ARMY}}}}
-\AMarmy
-\newcommand{\AMunit}[1]{ 		\newsavebox{\UNIT}      \sbox{\UNIT}{\headfmt{#1}}}
-\newcommand{\AMaddress}[1]{	\newsavebox{\ADDRESS}   \sbox{\ADDRESS}{\headfmt{#1}}}
-\newcommand{\AMsymbol}[1]{	\newsavebox{\OSYMB}     \sbox{\OSYMB}{#1}}
-\newcommand{\AMsubject}[1]{	\newsavebox{\SUBJECT}   \sbox{\SUBJECT}{#1}}
+\newcommand{\AMdept}[1][DEPARTMENT OF THE ARMY]{\sbox{\DEPT}{\textmd{{#1}}}}
+\newcommand{\AMunit}[1]{\sbox{\UNIT}{\headfmt{#1}}}
+\newcommand{\AMaddress}[1]{\sbox{\ADDRESS}{\headfmt{#1}}}
+\newcommand{\AMsymbol}[1]{\sbox{\OSYMB}{#1}}
+\newcommand{\AMsubject}[1]{\sbox{\SUBJECT}{#1}}
+\newcommand{\AMfor}[1]{\sbox{\MEMOFOR}{#1}} 	% need to figure out how to set
+						%default values without breaking template
+
+%\newcommand{\AMfor}[1][MEMORANDUM FOR RECORD]{\newsavebox{\MEMOFOR}\sbox{\MEMOFOR}{#1}}
 
 \newcommand{\headfmt}[1]{\uppercase{\footnotesize\textmd{{#1}}}}
 
@@ -111,14 +125,13 @@
 \renewcommand{\headrulewidth}{0.0pt}
 \renewcommand{\footrulewidth}{0.0pt}
 }
- 
 
 \newcommand{\AMsethead}{
  \thispagestyle{plain}
  \pagestyle{body}
  \ \vspace*{12pt}\\      
  \noindent\usebox{\OSYMB}\hfill\today\\[24pt]
- \noindent MEMORANDUM FOR RECORD\\[12pt]
+ \noindent \usebox{\MEMOFOR}\\[12pt]
  \noindent SUBJECT: \usebox{\SUBJECT}\\[12pt]
  \setlength{\parskip}{12pt}
 }

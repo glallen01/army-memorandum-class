@@ -1,7 +1,7 @@
 pdf: 00-Main.pdf
 
 
-00-Main.pdf: 00-Main.tex
+00-Main.pdf: 00-Main.tex armymemo.cls
 	pdflatex 00-Main.tex
 	pdflatex 00-Main.tex
 
