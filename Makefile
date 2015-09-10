@@ -1,33 +1,32 @@
-pdf: 00-Main.pdf
+pdf: example.pdf
 
 
-00-Main.pdf: 00-Main.tex armymemo.cls
-	pdflatex 00-Main.tex
-	pdflatex 00-Main.tex
+example.pdf: example.tex armymemo.cls
+	pdflatex example.tex
+	pdflatex example.tex
 
 clean:
 	-rm -f \
-		*.fdb_latexmk \
-		*.bbl \
-		*.log \
+		*-blx.bib \
 		*.aux \
+		*.bbl \
+		*.bcf \
 		*.blg \
+		*.brf \
 		*.dvi \
-		*.pdf \
-		*.toc \
-		*.url \
-		*.lof \
-		*.orig \
+		*.ent \
+		*.fdb_latexmk \
 		*.idx \
 		*.ilg \
 		*.ind \
-		*.out \
+		*.lof \
+		*.log \
 		*.lot \
-		*.url \
-		00-Main.bcf \
-		00-Main-blx.bib \
-		00-Main.brf \
-		00-Main.ent \
-		00-Main.rtf \
-		00-Main.run.xml
+		*.orig \
+		*.out \
+		*.pdf \
+		*.rtf \
+		*.run.xml \
+		*.toc \
+		*.url 
 

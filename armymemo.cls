@@ -17,31 +17,38 @@
         %parindent,
         %liststotoc,
         %draft,
-        headinclude,
-        DIV=15,
-        headlines=2,
+%       headinclude,
+        %DIV=15,
+%        headlines=2,
         pdftex]{scrartcl}
 
 \RequirePackage{fancyhdr}
-\RequirePackage[margin=1in]{geometry}
-%\RequirePackage[margin=1in,bottom=0.8in,includefoot]{geometry}
-\RequirePackage{typearea}
-  \setlength{\headheight}{24pt}
-  \setlength{\footskip}{24pt}
-\RequirePackage[absolute]{textpos}
-\RequirePackage[utf8x]{inputenc}		% for windows quotes without having to sed them out
-\RequirePackage[T1]{fontenc}                	% For Times (Nimbus Roman) Font:
-\RequirePackage{tgtermes}
+\RequirePackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+%\RequirePackage[margin=1in]{geometry}
+\RequirePackage[margin=1in,bottom=1.2in,includefoot]{geometry}
+%\RequirePackage{typearea}
+%  \setlength{\headheight}{0.75in}
+%  \setlength{\footskip}{24pt}
+%\RequirePackage[absolute]{textpos}
+%\RequirePackage[utf8x]{inputenc}		% for windows quotes without having to sed them out
+%\RequirePackage[T1]{fontenc}                	% For Times (Nimbus Roman) Font:
+%\RequirePackage{tgtermes}
+%%\RequirePackage{fontspec}
+%%%%  \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
+%%%%  %\setmainfont{Times New Roman}
+%%%%  \setmainfont{Arial}
+%%%%  \setsansfont{Arial}
 \RequirePackage{color}
-\RequirePackage{ctable}
+%\RequirePackage{ctable}
 \RequirePackage{graphicx}
-\RequirePackage{lipsum}                     	% delete this later
 \RequirePackage{microtype}
-\RequirePackage{ragged2e} \RaggedRight      	% recommended by jurabib for better ragged right
+%\RequirePackage{ragged2e} \RaggedRight      	% recommended by jurabib for better ragged right
+\RequirePackage[none]{hyphenat}\raggedright
 \RequirePackage{setspace}%\doublespacing    	% turns off in floats and tables
 \singlespacing
 %\RequirePackage{endnotes}
-\RequirePackage{multicol}
+%\RequirePackage{multicol}
 \RequirePackage[normalem]{ulem}
 
 %Setting penalties for widows and orphans: broken paragraphs with only one line
@@ -50,6 +57,8 @@
 %% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=widows
 \widowpenalty=10000
 \clubpenalty=10000
+\setlength{\parskip}{3ex plus 2ex minus 2ex}
+%\setlength{\headsep}{24pt}
 %  TODO Possible alternate solution, needs testing:
 %   http://en.wikibooks.org/wiki/LaTeX/Page_Layout#Widows_and_orphans
 %  \setlength{\parskip}{3ex plus 2ex minus 2ex}
@@ -68,9 +77,9 @@
 %additional newlines if there's already a separation
 \newcommand{\Ni}{\refstepcounter{ParNumi}\noindent\makebox[\parindent][l]{\arabic{ParNumi}. }}
 \newcommand{\Nii}{\refstepcounter{ParNumii}\noindent\hspace{\parindent}\makebox[\parindent][l]{\alph{ParNumii}. }}
-\newcommand{\Niii}{\refstepcounter{ParNumiii}\noindent\hspace{2\parindent}\makebox[\parindent][l]{\roman{ParNumiii}. }}
-\newcommand{\Niiii}{\refstepcounter{ParNumiiii}\noindent\hspace{3\parindent}\makebox[\parindent][l]{(\arabic{ParNumiiii}) }}
-\newcommand{\Niiiii}{\refstepcounter{ParNumiiiii}\noindent\hspace{4\parindent}\makebox[\parindent][l]{(\alph{ParNumiiiii}) }}
+\newcommand{\Niii}{\refstepcounter{ParNumiii}\noindent\hspace{2\parindent}\makebox[\parindent][l]{(\arabic{ParNumiii}) }}
+\newcommand{\Niiii}{\refstepcounter{ParNumiiii}\noindent\hspace{2\parindent}\makebox[\parindent][l]{(\alph{ParNumiiii}) }}
+%\newcommand{\Niiiii}{\refstepcounter{ParNumiiiii}\noindent\hspace{4\parindent}\makebox[\parindent][l]{(\alph{ParNumiiiii}) }}
 \newcommand{\Nx}[1]{\noindent\hspace{#1\parindent}}
 
 % #0 Department
@@ -83,23 +92,26 @@
 \newsavebox{\DEPT}
 \newsavebox{\UNIT}   
 \newsavebox{\ADDRESS}
+\newsavebox{\CITY}
 \newsavebox{\OSYMB}  
 \newsavebox{\MEMOFOR}
 \newsavebox{\SUBJECT}
 \newcommand{\AMfor}[1]{\renewcommand{\AMfor}{#1}}
 \newcommand{\AMsubject}[1]{\renewcommand{\AMsubject}{#1}}
 
+\newcommand{\headfmt}[1]{\sffamily\uppercase{\footnotesize\textmd{{#1}}}}
+
 % could adjust to add other services or customizable 'dept'
-\newcommand{\AMdept}[1]{\sbox{\DEPT}{\textmd{{#1}}}}
+\newcommand{\AMdept}[1]{\sbox{\DEPT}{\sffamily\bfseries{{#1}}}}
 \newcommand{\AMunit}[1]{\sbox{\UNIT}{\headfmt{#1}}}
 \newcommand{\AMaddress}[1]{\sbox{\ADDRESS}{\headfmt{#1}}}
+\newcommand{\AMcity}[1]{\sbox{\CITY}{\headfmt{#1}}}
 \newcommand{\AMsymbol}[1]{\sbox{\OSYMB}{#1}}
 %\newcommand{\AMsubject}[1]{\sbox{\SUBJECT}{#1}}
 %\newcommand{\AMfor}[1]{\sbox{\MEMOFOR}{#1}}
 
 %\newcommand{\AMfor}[1][MEMORANDUM FOR RECORD]{\newsavebox{\MEMOFOR}\sbox{\MEMOFOR}{#1}}
 
-\newcommand{\headfmt}[1]{\uppercase{\footnotesize\textmd{{#1}}}}
 
 \setkomafont{pagehead}{\normalfont}
 \setkomafont{pagefoot}{\normalfont}
@@ -110,36 +122,35 @@
 \fancypagestyle{plain}{%
 \fancyhf{} %clear all header and footer fields
 \lhead{%
+%\vspace{0.5in}
 \setlength{\unitlength}{1pc}    
 \begin{picture}(0,0)
-\put(-3,-2.5){\includegraphics[height=1in]{DA_LOGO}}
+\put(-3.0,-1.75){\includegraphics[height=1in]{DA_LOGO}}
 \end{picture}}
-\chead{%
-%HEADER and SECTION ADDRESS
+\chead{%HEADER and SECTION ADDRESS
 \usebox{\DEPT}\\
 \usebox{\UNIT}\\
-\usebox{\ADDRESS}}
+\usebox{\ADDRESS}\\
+\usebox{\CITY}}
 \renewcommand{\headrulewidth}{0.0pt}
 \renewcommand{\footrulewidth}{0.0pt}
 }
 
 \fancypagestyle{body}{%
 %\lhead[]{\newgeometry{margin=1.0in,includefoot}\usebox{\OSYMB}\\SUBJECT: \AMsubject\\[24pt]}
-\lhead[]{\usebox{\OSYMB}\\SUBJECT: \AMsubject\\}%[24pt]}
+\lhead[]{\usebox{\OSYMB}\\SUBJECT: \AMsubject}%[24pt]}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.0pt}
 \renewcommand{\footrulewidth}{0.0pt}
 }
 
-\newcommand{\AMsethead}{
- \setlength{\parskip}{0pt}
- \thispagestyle{plain}
- \pagestyle{body}
- \ \vspace*{12pt}\\      
- \noindent\usebox{\OSYMB}\hfill\today\\\ \\
- \noindent \AMfor\\\ \\
- \noindent SUBJECT: \AMsubject%\\\ \\\ \\
- \setlength{\parskip}{12pt}%\vspace*{-24pt}
+\newcommand{\AMsethead}{\setlength{\parskip}{0pt}\thispagestyle{plain}\pagestyle{body}
+~\vspace*{24pt}~\\
+\noindent\usebox{\OSYMB}\hfill\today\\~\\
+\noindent \AMfor\\~\\
+\noindent SUBJECT: \AMsubject\\~\\
+% \setlength{\parskip}{10pt plus 2ex minus 2ex}%\vspace*{-24pt}
+ \setlength{\parskip}{2ex plus 1ex minus 1ex} % TEST
 }
 
 % #1 Name
