@@ -26,7 +26,7 @@
 \RequirePackage{helvet}
 \renewcommand{\familydefault}{\sfdefault}
 %\RequirePackage[margin=1in]{geometry}
-\RequirePackage[margin=1in,bottom=1.2in,includefoot]{geometry}
+\RequirePackage[letterpaper,margin=1in,bottom=1.2in,includefoot]{geometry}
 %\RequirePackage{typearea}
 %  \setlength{\headheight}{0.75in}
 %  \setlength{\footskip}{24pt}
