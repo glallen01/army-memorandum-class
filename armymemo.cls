@@ -16,14 +16,14 @@
 
 \RequirePackage{fancyhdr}
 \RequirePackage{helvet}
+\RequirePackage{datetime} % used to change date format
 % Set paper size and margins
 \RequirePackage[letterpaper,margin=1in,bottom=1.2in,includefoot]{geometry}
 % Setup fonts:
 %\renewcommand{\familydefault}{\sfdefault}
-\RequirePackage{fontspec}
+\RequirePackage{fontspec} % Requires XeLatex
 \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
+\setmainfont{Arial} % AR 25-50 recommends Arial as of 17 May 2013.  1-17b
 \RequirePackage{graphicx}
 
 % regarding ragged right and microtype
@@ -47,6 +47,10 @@
 %   http://en.wikibooks.org/wiki/LaTeX/Page_Layout#Widows_and_orphans
 %  \setlength{\parskip}{3ex plus 2ex minus 2ex}
 %  Additional reference: http://www.economics.utoronto.ca/osborne/latex/PMAKEUP.HTM
+
+% Army date format.  1-23a. Note, this is the long month name
+\newdateformat{armydate}{\THEDAY\ \monthname[\THEMONTH] \THEYEAR}
+
 
 \setlength{\parindent}{2em}
 
@@ -132,9 +136,12 @@
 
 \newcommand{\AMsethead}{\setlength{\parskip}{0pt}\thispagestyle{plain}\pagestyle{body}
 ~\vspace*{24pt}~\\
-\noindent\usebox{\OSYMB}\hfill\usebox{\DATE}\\~\\
+%\noindent\usebox{\OSYMB}\hfill\usebox{\DATE}\\~\\
+%\noindent\usebox{\OSYMB}\hfill\armydate\today\\\ \\ \ \\ % two blank lines 2-4a.5
+\noindent\usebox{\OSYMB}\hfill\armydate\today\\\ \\ \ \\ % three blank lines 2-4a.5
 \noindent \AMfor\\~\\
 \noindent SUBJECT: \AMsubject\\~\\
+%\noindent SUBJECT: \AMsubject\\\ \\% two blank lines 2-4b.1
 % \setlength{\parskip}{10pt plus 2ex minus 2ex}%\vspace*{-24pt}
  \setlength{\parskip}{2ex plus 1ex minus 1ex} % TEST
 }
@@ -147,7 +154,7 @@
 	\setlength{\parskip}{0pt}
 	\vspace{48pt}
 	\noindent\parbox[t]{2in}{\noindent #4}
-	\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}
+	\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
 }
 \newcommand{\AMMOAsig}[7]{
 	\setlength{\parskip}{0pt}
