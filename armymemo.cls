@@ -14,6 +14,7 @@
         oneside,
         pdftex]{scrartcl}
 
+\RequirePackage{tikz}
 \RequirePackage{fancyhdr}
 \RequirePackage{helvet}
 \RequirePackage{datetime} % used to change date format
@@ -111,12 +112,14 @@
 
 \fancypagestyle{plain}{%
 \fancyhf{} %clear all header and footer fields
-\lhead{%
-%\vspace{0.5in}
-\setlength{\unitlength}{1pc}    
-\begin{picture}(0,0)
-\put(-3.0,-1.75){\includegraphics[height=1in]{DA_LOGO}}
-\end{picture}}
+\lhead{% still wrapping logo in header for the moment to keep on page1
+{\begin{tikzpicture}[remember picture, overlay]
+% Thanks @pconwell for the tikz logo placement:
+%   "don't ask why the picture has to be shifted to these somwewhat random
+%   coordinates - I don't know. But this is what gets the seal to 0.5in from top
+%   and left." --@pconwell
+\node [xshift=-0.25in,yshift=0.3125in] at (0,0) {\includegraphics[height=1in]{DODb1.eps}};
+\end{tikzpicture}}}
 \chead{%HEADER and SECTION ADDRESS
 \usebox{\DEPT}\\
 \usebox{\UNIT}\\
