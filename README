@@ -4,7 +4,7 @@ Army Memorandum Class
 
 Provides a basic AR 25-50 memo in latex.
 
-
+Requires xelatex for font handling.
 
 
 

@@ -1,55 +1,38 @@
+
 % Army memo class
-% Version 0.1 2011/09/15
+% Version 0.1.1 2016/03/12
 % George L. Allen glallen01@gmail.com
 
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{armymemo}[2011/09/01]
+\ProvidesPackage{armymemo}[2016/03/12]
 
 \LoadClass[
-        %titlepage,
         12pt,
         letterpaper,
         headings=small,
-        %twoside,
         oneside,
-        %parskip=half-,
-        %parindent,
-        %liststotoc,
-        %draft,
-%       headinclude,
-        %DIV=15,
-%        headlines=2,
         pdftex]{scrartcl}
 
 \RequirePackage{fancyhdr}
 \RequirePackage{helvet}
-\renewcommand{\familydefault}{\sfdefault}
-%\RequirePackage[margin=1in]{geometry}
+% Set paper size and margins
 \RequirePackage[letterpaper,margin=1in,bottom=1.2in,includefoot]{geometry}
-%\RequirePackage{typearea}
-%  \setlength{\headheight}{0.75in}
-%  \setlength{\footskip}{24pt}
-%\RequirePackage[absolute]{textpos}
-%\RequirePackage[utf8x]{inputenc}		% for windows quotes without having to sed them out
-%\RequirePackage[T1]{fontenc}                	% For Times (Nimbus Roman) Font:
-%\RequirePackage{tgtermes}
-%%\RequirePackage{fontspec}
-%%%%  \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
-%%%%  %\setmainfont{Times New Roman}
-%%%%  \setmainfont{Arial}
-%%%%  \setsansfont{Arial}
-\RequirePackage{color}
-%\RequirePackage{ctable}
+% Setup fonts:
+%\renewcommand{\familydefault}{\sfdefault}
+\RequirePackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
 \RequirePackage{graphicx}
-\RequirePackage{microtype}
-%\RequirePackage{ragged2e} \RaggedRight      	% recommended by jurabib for better ragged right
-\RequirePackage[none]{hyphenat}\raggedright
-\RequirePackage{setspace}%\doublespacing    	% turns off in floats and tables
-\singlespacing
-%\RequirePackage{endnotes}
-%\RequirePackage{multicol}
-\RequirePackage[normalem]{ulem}
+
+% regarding ragged right and microtype
+%    http://tex.stackexchange.com/questions/134303/does-combining-microtype-with-ragged-right-make-any-sense
+%\RequirePackage[protrusion=true,expansion=false]{microtype}
+% regarding RaggedRight and \hyphenpenalty=500
+%    http://tex.stackexchange.com/questions/291685/minimize-hyphenations-with-ragged2e
+\RequirePackage{ragged2e} \RaggedRight      	% recommended by jurabib for better ragged right
+%\RequirePackage[none]{hyphenat}\raggedright
 
 %Setting penalties for widows and orphans: broken paragraphs with only one line
 %at the top or bottom of the page. This messes up other formatting leaving lots
@@ -58,6 +41,7 @@
 \widowpenalty=10000
 \clubpenalty=10000
 \setlength{\parskip}{3ex plus 2ex minus 2ex}
+
 %\setlength{\headsep}{24pt}
 %  TODO Possible alternate solution, needs testing:
 %   http://en.wikibooks.org/wiki/LaTeX/Page_Layout#Widows_and_orphans
@@ -96,6 +80,8 @@
 \newsavebox{\OSYMB}  
 \newsavebox{\MEMOFOR}
 \newsavebox{\SUBJECT}
+\newsavebox{\DATE}
+\newcommand{\AMdate}[1]{\sbox{\DATE}{#1}}
 \newcommand{\AMfor}[1]{\renewcommand{\AMfor}{#1}}
 \newcommand{\AMsubject}[1]{\renewcommand{\AMsubject}{#1}}
 
@@ -146,7 +132,7 @@
 
 \newcommand{\AMsethead}{\setlength{\parskip}{0pt}\thispagestyle{plain}\pagestyle{body}
 ~\vspace*{24pt}~\\
-\noindent\usebox{\OSYMB}\hfill\today\\~\\
+\noindent\usebox{\OSYMB}\hfill\usebox{\DATE}\\~\\
 \noindent \AMfor\\~\\
 \noindent SUBJECT: \AMsubject\\~\\
 % \setlength{\parskip}{10pt plus 2ex minus 2ex}%\vspace*{-24pt}

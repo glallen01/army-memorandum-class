@@ -2,8 +2,8 @@ pdf: example.pdf
 
 
 example.pdf: example.tex armymemo.cls
-	pdflatex example.tex
-	pdflatex example.tex
+	xelatex example.tex
+	xelatex example.tex
 
 clean:
 	-rm -f \
