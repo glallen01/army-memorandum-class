@@ -26,7 +26,7 @@
 \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
 \setmainfont{Arial} % AR 25-50 recommends Arial as of 17 May 2013.  1-17b
 \RequirePackage{graphicx}
-
+\RequirePackage{hanging}
 % regarding ragged right and microtype
 %    http://tex.stackexchange.com/questions/134303/does-combining-microtype-with-ragged-right-make-any-sense
 %\RequirePackage[protrusion=true,expansion=false]{microtype}
@@ -153,12 +153,21 @@
 % #2 Rank, Branch
 % #3 Title
 % #4 Enclosures
-\newcommand{\AMsigblock}[4]{
-	\setlength{\parskip}{0pt}
-	\vspace{48pt}
-	\noindent\parbox[t]{2in}{\noindent #4}
-	\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
+\newcommand{\AMsigblock}[4]{%
+\setlength{\parskip}{0pt}
+\vspace{48pt}
+\noindent\begin{minipage}[t]{\textwidth}
+  \parbox[t]{0.28\textwidth}{Encl:\\%
+    \begin{hangparas}{2.4ex}{1}
+      #4%
+    \end{hangparas}
+}% Encls
+  \hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\ % Name, Rank/Br, Title
+\end{minipage}
 }
+
+\newcommand{\AMcf}[1]{\\[24pt]\noindent{}\parbox[t]{\textwidth}{CF: \\#1}}
+
 \newcommand{\AMMOAsig}[7]{
 	\setlength{\parskip}{0pt}
 	\vspace{48pt}
