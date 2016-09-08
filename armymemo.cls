@@ -1,4 +1,3 @@
-
 % Army memo class
 % Version 0.1.1 2016/03/12
 % George L. Allen glallen01@gmail.com
