@@ -1,6 +1,6 @@
 % Army memo class
 % Version 0.1.1 2016/03/12
-% George L. Allen glallen01@gmail.com
+% George L. Allen base64(Z2xhbGxlbjAx) AT base64(Z21haWwuY29t)
 
 
 \NeedsTeXFormat{LaTeX2e}
