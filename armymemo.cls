@@ -1,7 +1,7 @@
 % Army memo class
-% Version 0.1.1 2016/03/12
+% Modification of Version 0.1.1 2016/03/12
 % George L. Allen base64(Z2xhbGxlbjAx) AT base64(Z21haWwuY29t)
-
+% Modified by Roberts G. Nelson
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{armymemo}[2016/03/12]
@@ -18,7 +18,7 @@
 \RequirePackage{helvet}
 \RequirePackage{datetime} % used to change date format
 % Set paper size and margins
-\RequirePackage[letterpaper,margin=1in,bottom=1.2in,includefoot]{geometry}
+\RequirePackage[letterpaper,margin=1in,bottom=1in,includefoot]{geometry}
 % Setup fonts:
 %\renewcommand{\familydefault}{\sfdefault}
 \RequirePackage{fontspec} % Requires XeLatex
