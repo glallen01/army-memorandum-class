@@ -52,7 +52,7 @@
 \newdateformat{armydate}{\THEDAY\ \monthname[\THEMONTH] \THEYEAR}
 
 
-\setlength{\parindent}{2em}
+\setlength{\parindent}{1.5em}
 
 \newcounter{ParNumi}
 \newcounter{ParNumii}[ParNumi]
@@ -65,9 +65,8 @@
 %additional newlines if there's already a separation
 \newcommand{\Ni}{\refstepcounter{ParNumi}\noindent\makebox[\parindent][l]{\arabic{ParNumi}. }}
 \newcommand{\Nii}{\refstepcounter{ParNumii}\noindent\hspace{\parindent}\makebox[\parindent][l]{\alph{ParNumii}. }}
-\newcommand{\Niii}{\refstepcounter{ParNumiii}\noindent\hspace{2\parindent}\makebox[\parindent][l]{(\arabic{ParNumiii}) }}
-\newcommand{\Niiii}{\refstepcounter{ParNumiiii}\noindent\hspace{2\parindent}\makebox[\parindent][l]{(\alph{ParNumiiii}) }}
-%\newcommand{\Niiiii}{\refstepcounter{ParNumiiiii}\noindent\hspace{4\parindent}\makebox[\parindent][l]{(\alph{ParNumiiiii}) }}
+\newcommand{\Niii}{\refstepcounter{ParNumiii}\noindent\hspace{2\parindent}\setlength{\parindent}{2em}\makebox[\parindent][l]{(\arabic{ParNumiii}) }\setlength{\parindent}{1.5em}}
+\newcommand{\Niiii}{\refstepcounter{ParNumiiii}\noindent\hspace{2\parindent}\setlength{\parindent}{2em}\makebox[\parindent][l]{(\alph{ParNumiiii}) }\setlength{\parindent}{1.5em}}
 \newcommand{\Nx}[1]{\noindent\hspace{#1\parindent}}
 
 % #0 Department
