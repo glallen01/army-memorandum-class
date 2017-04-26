@@ -117,7 +117,7 @@
 %   "don't ask why the picture has to be shifted to these somwewhat random
 %   coordinates - I don't know. But this is what gets the seal to 0.5in from top
 %   and left." --@pconwell
-\node [xshift=-0.25in,yshift=0.3125in] at (0,0) {\includegraphics[height=1in]{DODb1.eps}};
+\node [xshift=-0.0in,yshift=0.3125in] at (0,0) {\includegraphics[height=1in]{DODb1.eps}};
 \end{tikzpicture}}}
 \chead{%HEADER and SECTION ADDRESS
 \usebox{\DEPT}\\
