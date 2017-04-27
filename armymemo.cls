@@ -32,8 +32,8 @@
 %at the top or bottom of the page. This messes up other formatting leaving lots
 %of space at the bottom of some pages that requires manual intervention.
 %% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=widows
-\widowpenalty=500
-\clubpenalty=500
+\widowpenalty=1000
+\clubpenalty=1000
 
 % Army date format.  1-23a. Note, this is the long month name
 \newdateformat{armydate}{\THEDAY\ \monthname[\THEMONTH] \THEYEAR}
@@ -132,28 +132,33 @@
 % #1 Name
 % #2 Rank, Branch
 % #3 Title
-% #4 Enclosures
-\newcommand{\AMsigblock}[4]{%
+% #4 Number of Enclosures
+% #5 Enclosures   
+\newcommand{\AMsigblock}[5]{%
   \vspace{4\parskip}
   \noindent\begin{minipage}[t]{\textwidth}
-  \parbox[t]{0.28\textwidth}{Encl:\\%
-    \begin{hangparas}{2.4ex}{1}
-      #4%
-    \end{hangparas}
-  }% Encls
-  \hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\ % Name, Rank/Br, Title
+
+  \ifnum#4=0
+      \parbox[t]{0.28\textwidth}{Encl}\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\ % Name, Rank/Br, Title
+  \else
+      \parbox[t]{0.28\textwidth}{#4 \ Encls\\
+        \begin{hangparas}{2.4ex}{1}
+          #5%
+        \end{hangparas}
+      }\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\ % Name, Rank/Br, Title
+  \fi
+      
   \end{minipage}
 }
 
-\newcommand{\AMcf}[1]{\\[2\parskip]\noindent{}\parbox[t]{\textwidth}{CF: \\#1}}
+\newcommand{\AMcf}[1]{\\[1\parskip]\noindent{}\parbox[t]{\textwidth}{CF: \\#1}}
 
 \newcommand{\AMMOAsig}[7]{
-	\setlength{\parskip}{0pt}
-	\vspace{48pt}
+	\vspace{4\parskip}
 	\begin{minipage}{\textwidth}
 	\noindent\parbox[t]{0.45\textwidth}{\noindent #1\\#2\\#3}
 	\hfill\parbox[t]{0.45\textwidth}{\uppercase{#4\\#5}\\#6}
 	\end{minipage}
-	\ \\\vspace{24pt}
+	\ \\\vspace{2em}
 	\noindent\parbox[t]{2in}{\noindent #7}
 }
