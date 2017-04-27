@@ -4,7 +4,7 @@
 % Modified by Roberts G. Nelson
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{armymemo}[2016/03/12]
+\ProvidesPackage{armymemo}[2017/04/27]
 
 \LoadClass[
         12pt,
@@ -20,20 +20,13 @@
 % Set paper size and margins
 \RequirePackage[letterpaper,margin=1in,bottom=1in,includefoot]{geometry}
 % Setup fonts:
-%\renewcommand{\familydefault}{\sfdefault}
 \RequirePackage{fontspec} % Requires XeLatex
 \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
 \setmainfont{Arial} % AR 25-50 recommends Arial as of 17 May 2013.  1-17b
 \RequirePackage{graphicx}
 \RequirePackage{setspace} 
 \RequirePackage{hanging}
-% regarding ragged right and microtype
-%    http://tex.stackexchange.com/questions/134303/does-combining-microtype-with-ragged-right-make-any-sense
-%\RequirePackage[protrusion=true,expansion=false]{microtype}
-% regarding RaggedRight and \hyphenpenalty=500
-%    http://tex.stackexchange.com/questions/291685/minimize-hyphenations-with-ragged2e
 \RequirePackage{ragged2e} \RaggedRight      	% recommended by jurabib for better ragged right
-%\RequirePackage[none]{hyphenat}\raggedright
 
 %Setting penalties for widows and orphans: broken paragraphs with only one line
 %at the top or bottom of the page. This messes up other formatting leaving lots
@@ -41,12 +34,6 @@
 %% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=widows
 \widowpenalty=500
 \clubpenalty=500
-
-%\setlength{\headsep}{24pt}
-%  TODO Possible alternate solution, needs testing:
-%   http://en.wikibooks.org/wiki/LaTeX/Page_Layout#Widows_and_orphans
-%  \setlength{\parskip}{3ex plus 2ex minus 2ex}
-%  Additional reference: http://www.economics.utoronto.ca/osborne/latex/PMAKEUP.HTM
 
 % Army date format.  1-23a. Note, this is the long month name
 \newdateformat{armydate}{\THEDAY\ \monthname[\THEMONTH] \THEYEAR}
@@ -95,11 +82,6 @@
 \newcommand{\AMaddress}[1]{\sbox{\ADDRESS}{\headfmt{#1}}}
 \newcommand{\AMcity}[1]{\sbox{\CITY}{\headfmt{#1}}}
 \newcommand{\AMsymbol}[1]{\sbox{\OSYMB}{#1}}
-%\newcommand{\AMsubject}[1]{\sbox{\SUBJECT}{#1}}
-%\newcommand{\AMfor}[1]{\sbox{\MEMOFOR}{#1}}
-
-%\newcommand{\AMfor}[1][MEMORANDUM FOR RECORD]{\newsavebox{\MEMOFOR}\sbox{\MEMOFOR}{#1}}
-
 
 \setkomafont{pagehead}{\normalfont}
 \setkomafont{pagefoot}{\normalfont}
@@ -128,7 +110,6 @@
 }
 
 \fancypagestyle{body}{%
-%\lhead[]{\newgeometry{margin=1.0in,includefoot}\usebox{\OSYMB}\\SUBJECT: \AMsubject\\[24pt]}
 \lhead[]{\usebox{\OSYMB}\\SUBJECT: \AMsubject}%[24pt]}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.0pt}
