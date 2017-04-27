@@ -90,6 +90,7 @@
 \setkomafont{disposition}{\normalfont}
 
 \fancypagestyle{plain}{%
+  \topmargin = -0.5in % top of page to header = 0.5in
   \fancyhf{} %clear all header and footer fields
   \lhead{% still wrapping logo in header for the moment to keep on page1
     {\begin{tikzpicture}[remember picture, overlay]
@@ -110,10 +111,10 @@
 }
 
 \fancypagestyle{body}{%
-\lhead[]{\usebox{\OSYMB}\\SUBJECT: \AMsubject}%[24pt]}
-\fancyfoot[C]{\thepage}
-\renewcommand{\headrulewidth}{0.0pt}
-\renewcommand{\footrulewidth}{0.0pt}
+  \lhead[]{\usebox{\OSYMB}\\SUBJECT: \AMsubject}%[24pt]}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.0pt}
+  \renewcommand{\footrulewidth}{0.0pt}
 }
 
 \newcommand{\AMsethead}{
@@ -139,9 +140,9 @@
     \begin{hangparas}{2.4ex}{1}
       #4%
     \end{hangparas}
-}% Encls
+  }% Encls
   \hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\ % Name, Rank/Br, Title
-\end{minipage}
+  \end{minipage}
 }
 
 \newcommand{\AMcf}[1]{\\[2\parskip]\noindent{}\parbox[t]{\textwidth}{CF: \\#1}}
