@@ -25,6 +25,7 @@
 \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
 \setmainfont{Arial} % AR 25-50 recommends Arial as of 17 May 2013.  1-17b
 \RequirePackage{graphicx}
+\RequirePackage{setspace} 
 \RequirePackage{hanging}
 % regarding ragged right and microtype
 %    http://tex.stackexchange.com/questions/134303/does-combining-microtype-with-ragged-right-make-any-sense
@@ -49,7 +50,6 @@
 
 % Army date format.  1-23a. Note, this is the long month name
 \newdateformat{armydate}{\THEDAY\ \monthname[\THEMONTH] \THEYEAR}
-
 
 \setlength{\parindent}{1.5em}
 
@@ -87,10 +87,10 @@
 \newcommand{\AMfor}[1]{\renewcommand{\AMfor}{#1}}
 \newcommand{\AMsubject}[1]{\renewcommand{\AMsubject}{#1}}
 
-\newcommand{\headfmt}[1]{\sffamily\uppercase{\footnotesize\textmd{{#1}}}}
+\newcommand{\headfmt}[1]{\sffamily\uppercase{\fontsize{8}{8}\selectfont{#1}}}
 
 % could adjust to add other services or customizable 'dept'
-\newcommand{\AMdept}[1]{\sbox{\DEPT}{\sffamily\bfseries{{#1}}}}
+\newcommand{\AMdept}[1]{\sbox{\DEPT}{\sffamily\bfseries{\fontsize{10}{8}\selectfont{#1}}}}
 \newcommand{\AMunit}[1]{\sbox{\UNIT}{\headfmt{#1}}}
 \newcommand{\AMaddress}[1]{\sbox{\ADDRESS}{\headfmt{#1}}}
 \newcommand{\AMcity}[1]{\sbox{\CITY}{\headfmt{#1}}}
@@ -108,22 +108,23 @@
 \setkomafont{disposition}{\normalfont}
 
 \fancypagestyle{plain}{%
-\fancyhf{} %clear all header and footer fields
-\lhead{% still wrapping logo in header for the moment to keep on page1
-{\begin{tikzpicture}[remember picture, overlay]
-% Thanks @pconwell for the tikz logo placement:
-%   "don't ask why the picture has to be shifted to these somwewhat random
-%   coordinates - I don't know. But this is what gets the seal to 0.5in from top
-%   and left." --@pconwell
-\node [xshift=-0.0in,yshift=0.3125in] at (0,0) {\includegraphics[height=1in]{DODb1.eps}};
-\end{tikzpicture}}}
-\chead{%HEADER and SECTION ADDRESS
-\usebox{\DEPT}\\
-\usebox{\UNIT}\\
-\usebox{\ADDRESS}\\
-\usebox{\CITY}}
-\renewcommand{\headrulewidth}{0.0pt}
-\renewcommand{\footrulewidth}{0.0pt}
+  \fancyhf{} %clear all header and footer fields
+  \lhead{% still wrapping logo in header for the moment to keep on page1
+    {\begin{tikzpicture}[remember picture, overlay]
+        \node [xshift=0.0in,yshift=0.05in] at (0,0) {\includegraphics[height=1in]{DODb1.eps}};
+      \end{tikzpicture}}
+  }
+
+  \chead{%HEADER and SECTION ADDRESS
+    \setstretch{0.65} % adjusts spacing for the header
+    \usebox{\DEPT}\\
+    \usebox{\UNIT}\\
+    \usebox{\ADDRESS}\\
+    \usebox{\CITY}
+  }
+
+  \renewcommand{\headrulewidth}{0.0pt}
+  \renewcommand{\footrulewidth}{0.0pt}
 }
 
 \fancypagestyle{body}{%
@@ -135,13 +136,13 @@
 }
 
 \newcommand{\AMsethead}{
-  \setlength{\parskip}{1em minus .5em} %stretchable glue 
+  \setlength{\parskip}{1em minus .5em} %stretchable glue
   \thispagestyle{plain}
   \pagestyle{body}
-  \ \vspace*{24pt}\\
+  \ \vspace*{2em}\\
   \noindent\usebox{\OSYMB}\hfill\armydate\usebox{\DATE}
   \ \vspace*{2\parskip}\\
-  \noindent \AMfor\\ \ \\
+  \noindent \AMfor\\[1\parskip]
   \noindent SUBJECT: \AMsubject
   \ \vspace*{2\parskip}\\
 }
