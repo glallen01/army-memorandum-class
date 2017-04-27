@@ -38,9 +38,8 @@
 %at the top or bottom of the page. This messes up other formatting leaving lots
 %of space at the bottom of some pages that requires manual intervention.
 %% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=widows
-\widowpenalty=10000
-\clubpenalty=10000
-\setlength{\parskip}{3ex plus 2ex minus 2ex}
+\widowpenalty=500
+\clubpenalty=500
 
 %\setlength{\headsep}{24pt}
 %  TODO Possible alternate solution, needs testing:
@@ -135,16 +134,16 @@
 \renewcommand{\footrulewidth}{0.0pt}
 }
 
-\newcommand{\AMsethead}{\setlength{\parskip}{0pt}\thispagestyle{plain}\pagestyle{body}
-~\vspace*{24pt}~\\
-\noindent\usebox{\OSYMB}\hfill\armydate\usebox{\DATE}\\~\\
-%\noindent\usebox{\OSYMB}\hfill\armydate\today\\\ \\ \ \\ % two blank lines 2-4a.5
-%\noindent\usebox{\OSYMB}\hfill\armydate\today\\\ \\ \ \\ % three blank lines 2-4a.5
-\noindent \AMfor\\~\\
-\noindent SUBJECT: \AMsubject\\~\\
-%\noindent SUBJECT: \AMsubject\\\ \\% two blank lines 2-4b.1
-% \setlength{\parskip}{10pt plus 2ex minus 2ex}%\vspace*{-24pt}
- \setlength{\parskip}{2ex plus 1ex minus 1ex} % TEST
+\newcommand{\AMsethead}{
+  \setlength{\parskip}{1em minus .5em} %stretchable glue 
+  \thispagestyle{plain}
+  \pagestyle{body}
+  \ \vspace*{24pt}\\
+  \noindent\usebox{\OSYMB}\hfill\armydate\usebox{\DATE}
+  \ \vspace*{2\parskip}\\
+  \noindent \AMfor\\ \ \\
+  \noindent SUBJECT: \AMsubject
+  \ \vspace*{2\parskip}\\
 }
 
 % #1 Name
@@ -152,9 +151,8 @@
 % #3 Title
 % #4 Enclosures
 \newcommand{\AMsigblock}[4]{%
-\setlength{\parskip}{0pt}
-\vspace{48pt}
-\noindent\begin{minipage}[t]{\textwidth}
+  \vspace{4\parskip}
+  \noindent\begin{minipage}[t]{\textwidth}
   \parbox[t]{0.28\textwidth}{Encl:\\%
     \begin{hangparas}{2.4ex}{1}
       #4%
@@ -164,7 +162,7 @@
 \end{minipage}
 }
 
-\newcommand{\AMcf}[1]{\\[24pt]\noindent{}\parbox[t]{\textwidth}{CF: \\#1}}
+\newcommand{\AMcf}[1]{\\[2\parskip]\noindent{}\parbox[t]{\textwidth}{CF: \\#1}}
 
 \newcommand{\AMMOAsig}[7]{
 	\setlength{\parskip}{0pt}
