@@ -3,6 +3,7 @@
 % George L. Allen base64(Z2xhbGxlbjAx) AT base64(Z21haWwuY29t)
 % Modified by Roberts G. Nelson
 
+%-----------------------------------General Document Setup----------------------------------%
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{armymemo}[2017/04/27]
 
@@ -18,7 +19,7 @@
 \RequirePackage{helvet}
 \RequirePackage{datetime} % used to change date format
 % Set paper size and margins
-\RequirePackage[letterpaper,margin=1in,bottom=1in,includefoot]{geometry}
+\RequirePackage[letterpaper,margin=1in,bottom=1in,includefoot]{geometry} 
 % Setup fonts:
 \RequirePackage{fontspec} % Requires XeLatex
 \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
@@ -26,12 +27,10 @@
 \RequirePackage{graphicx}
 \RequirePackage{setspace} 
 \RequirePackage{hanging}
-\RequirePackage{ragged2e} \RaggedRight      	% recommended by jurabib for better ragged right
+\RequirePackage{ragged2e} \RaggedRight  % recommended by jurabib for better ragged right
 
 %Setting penalties for widows and orphans: broken paragraphs with only one line
-%at the top or bottom of the page. This messes up other formatting leaving lots
-%of space at the bottom of some pages that requires manual intervention.
-%% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=widows
+%at the top or bottom of the page.
 \widowpenalty=10000
 \clubpenalty=10000
 
@@ -41,6 +40,7 @@
 % Army date format.  1-23a. Note, this is the long month name
 \newdateformat{armydate}{\THEDAY\ \monthname[\THEMONTH] \THEYEAR}
 
+%-----------------------------------Paragraph Definitions-----------------------------------%
 \setlength{\parindent}{1.5em}
 
 \newcounter{ParNumi}
@@ -58,6 +58,7 @@
 \newcommand{\Niiii}{\refstepcounter{ParNumiiii}\noindent\hspace{2\parindent}\setlength{\parindent}{2em}\makebox[\parindent][l]{(\alph{ParNumiiii}) }\setlength{\parindent}{1.5em}}
 \newcommand{\Nx}[1]{\noindent\hspace{#1\parindent}}
 
+%------------------------------------------Header------------------------------------------%
 % #0 Department
 % #1 UNIT
 % #2 Address1
@@ -132,6 +133,7 @@
   \ \vspace*{2\parskip}\\
 }
 
+%-------------------------------------Signature Block-------------------------------------%
 % #1 Name
 % #2 Rank, Branch
 % #3 Title
@@ -142,13 +144,13 @@
   \noindent\begin{minipage}[t]{\textwidth}
 
   \ifnum#4=0
-      \parbox[t]{0.28\textwidth}{Encl}\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\ % Name, Rank/Br, Title
+      \parbox[t]{0.28\textwidth}{Encl}\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
   \else
       \parbox[t]{0.28\textwidth}{#4 \ Encls\\
         \begin{hangparas}{2.4ex}{1}
           #5%
         \end{hangparas}
-      }\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\ % Name, Rank/Br, Title
+      }\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
   \fi
       
   \end{minipage}
