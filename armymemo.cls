@@ -32,8 +32,11 @@
 %at the top or bottom of the page. This messes up other formatting leaving lots
 %of space at the bottom of some pages that requires manual intervention.
 %% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=widows
-\widowpenalty=1000
-\clubpenalty=1000
+\widowpenalty=10000
+\clubpenalty=10000
+
+% Disable hyphenation on a page-break. See AR 25-50 2-5-c-3
+\brokenpenalty10000\relax
 
 % Army date format.  1-23a. Note, this is the long month name
 \newdateformat{armydate}{\THEDAY\ \monthname[\THEMONTH] \THEYEAR}
