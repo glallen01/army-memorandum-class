@@ -19,13 +19,13 @@
 \RequirePackage{helvet}
 \RequirePackage{datetime} % used to change date format
 % Set paper size and margins
-\RequirePackage[letterpaper,margin=1in,bottom=1in,includefoot]{geometry} 
+\RequirePackage[letterpaper,margin=1in,bottom=1in,includefoot]{geometry}
 % Setup fonts:
 \RequirePackage{fontspec} % Requires XeLatex
 \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
 \setmainfont{Arial} % AR 25-50 recommends Arial as of 17 May 2013.  1-17b
 \RequirePackage{graphicx}
-\RequirePackage{setspace} 
+\RequirePackage{setspace}
 \RequirePackage{hanging}
 \RequirePackage{ragged2e} \RaggedRight  % recommended by jurabib for better ragged right
 
@@ -67,10 +67,10 @@
 
 % define the saveboxes for internal use
 \newsavebox{\DEPT}
-\newsavebox{\UNIT}   
+\newsavebox{\UNIT}
 \newsavebox{\ADDRESS}
 \newsavebox{\CITY}
-\newsavebox{\OSYMB}  
+\newsavebox{\OSYMB}
 \newsavebox{\MEMOFOR}
 \newsavebox{\SUBJECT}
 \newsavebox{\DATE}
@@ -78,10 +78,10 @@
 \newcommand{\AMfor}[1]{\renewcommand{\AMfor}{#1}}
 \newcommand{\AMsubject}[1]{\renewcommand{\AMsubject}{#1}}
 
-\newcommand{\headfmt}[1]{\sffamily\uppercase{\fontsize{8}{8}\selectfont{#1}}}
+\newcommand{\headfmt}[1]{\normalfont\bfseries\MakeUppercase{\fontsize{8}{8}\selectfont{#1}}}
 
 % could adjust to add other services or customizable 'dept'
-\newcommand{\AMdept}[1]{\sbox{\DEPT}{\sffamily\bfseries{\fontsize{10}{8}\selectfont{#1}}}}
+\newcommand{\AMdept}[1]{\sbox{\DEPT}{\normalfont\bfseries\MakeUppercase{\fontsize{10}{8}\selectfont{#1}}}}
 \newcommand{\AMunit}[1]{\sbox{\UNIT}{\headfmt{#1}}}
 \newcommand{\AMaddress}[1]{\sbox{\ADDRESS}{\headfmt{#1}}}
 \newcommand{\AMcity}[1]{\sbox{\CITY}{\headfmt{#1}}}
@@ -138,7 +138,7 @@
 % #2 Rank, Branch
 % #3 Title
 % #4 Number of Enclosures
-% #5 Enclosures   
+% #5 Enclosures
 \newcommand{\AMsigblock}[5]{%
   \vspace{4\parskip}
   \noindent\begin{minipage}[t]{\textwidth}
@@ -152,7 +152,7 @@
         \end{hangparas}
       }\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
   \fi
-      
+
   \end{minipage}
 }
 
