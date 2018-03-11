@@ -2,7 +2,7 @@
 Army Memorandum LaTeX Class
 ============
 
-![SampleMemo](https://www.seandeaton.com/resources/imgs/memo_example.png)
+![Sample Memo](example.png)
 
 ## Purpose
 Provides a basic AR 25-50 memo in LaTeX. S1 approved!
