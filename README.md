@@ -1,13 +1,40 @@
 
 Army Memorandum LaTeX Class
----------------------------
+============
 
-Provides a basic AR 25-50 memo in latex.
+![Sample Memo](example.png)
 
-Requires xelatex for font handling.
+## Purpose
+Provides a basic AR 25-50 memo in LaTeX. S1 approved!
+## Requirements
+- Requires XeLaTeX for font handling.
+- Requires the Arial font to be installed, if it's not already.
+### Ubuntu
+To install the XeLaTeX, run the following commands:
+```
+sudo apt-get install texlive-xetex
+```
+To install the Arial font:
+```
+sudo apt-get install ttf-mscorefonts-installer
+sudo fc-cache
+```
+### MacOS
+The Arial font will already be installed, but you will need to install XeLaTeX [here](http://www.tug.org/mactex/index.html).
+### Windows
+I currently don't have a method of testing this on Windows.
 
+## Installation and Usage
+Within a terminal:
+```
+git clone https://github.com/FourMoreCups/army-memorandum-class.git
+cd army-memorandum
+make
+```
+Bam! You'll find the file `example.pdf` in the directory.
+To change the data, use your favorite text editor to edit `example.tex` and then run `make` again.
 
-
+## Credits
 This is a fork from George Allen's project and his collaborators.
 Modifications made by Roberts Nelson.
 
@@ -19,6 +46,7 @@ Thanks for updates from:
 
 
 -----------------------------------------------------------------------------
+## License
 Copyright (c) 2011 George L. Allen <glallen01@gmail.com> All rights reserved.
 
 This program is free software; you can redistribute it and/or modify it under
