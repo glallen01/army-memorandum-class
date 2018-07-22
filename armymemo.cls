@@ -129,7 +129,7 @@
   \noindent\usebox{\OSYMB}\hfill\armydate\usebox{\DATE}
   \ \vspace*{2\parskip}\\
   \noindent \AMfor\\[1\parskip]
-  \noindent SUBJECT: \AMsubject
+  \noindent SUBJECT:~~\AMsubject % double space required after colon
   \ \vspace*{2\parskip}\\
 }
 
