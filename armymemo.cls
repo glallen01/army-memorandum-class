@@ -75,6 +75,8 @@
 \newsavebox{\MEMOFOR}
 \newsavebox{\SUBJECT}
 \newsavebox{\DATE}
+\newsavebox{\SUSPENSE}
+\newcommand{\AMsuspense}[1]{\sbox{\SUSPENSE}{#1}}
 \newcommand{\AMdate}[1]{\sbox{\DATE}{#1}}
 \newcommand{\AMfor}[1]{\renewcommand{\AMfor}{#1}}
 \newcommand{\AMsubject}[1]{\renewcommand{\AMsubject}{#1}}
@@ -126,7 +128,9 @@
   \setlength{\parskip}{1em minus .5em} %stretchable glue
   \thispagestyle{plain}
   \pagestyle{body}
-  \ \vspace*{2em}\\
+  \ \vspace*{1\parskip}\\
+  \noindent\hfill\armydate\usebox{\SUSPENSE}
+  \ \vspace*{1\parskip}\\
   \noindent\usebox{\OSYMB}\hfill\armydate\usebox{\DATE}
   \ \vspace*{2\parskip}\\
   \noindent \AMfor\\[1\parskip]
