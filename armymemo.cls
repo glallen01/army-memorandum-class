@@ -27,6 +27,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{setspace}
 \RequirePackage{hanging}
+\RequirePackage{xstring} %for finding character in substring
 \RequirePackage{ragged2e} \RaggedRight  % recommended by jurabib for better ragged right
 
 %Setting penalties for widows and orphans: broken paragraphs with only one line
@@ -143,15 +144,29 @@
   \vspace{4\parskip}
   \noindent\begin{minipage}[t]{\textwidth}
 
-  \ifnum#4=0
+  % Use "*" for the number of enclosures to not include the number before "Encls"
+  % See AR 25-50 Figure 4-4
+    
+  % ifsubstr from xstring package
+  % I am a novice with Tex, so there are probably much better ways to check the number of enclosures
+  % Hopefully someone can get around to it soon. (Bobby Nelson 2018-07-25)
+  \IfSubStr{#4}{*}{
+      \parbox[t]{0.28\textwidth}{Encls}\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
+  }{  
+    \ifnum#4=0
       \parbox[t]{0.28\textwidth}{}\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
-  \else
-      \parbox[t]{0.28\textwidth}{#4 \ Encls\\
-        \begin{hangparas}{2.4ex}{1}
-          #5%
-        \end{hangparas}
-      }\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
-  \fi
+    \else
+      \ifnum#4=1
+        \parbox[t]{0.28\textwidth}{Encl}\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
+      \else
+        \parbox[t]{0.28\textwidth}{#4 \ Encls\\
+          \begin{hangparas}{2.4ex}{1}
+            #5%
+          \end{hangparas}
+        }\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
+      \fi     
+    \fi
+  }
 
   \end{minipage}
 }
