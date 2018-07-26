@@ -144,7 +144,7 @@
   \noindent\begin{minipage}[t]{\textwidth}
 
   \ifnum#4=0
-      \parbox[t]{0.28\textwidth}{Encl}\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
+      \parbox[t]{0.28\textwidth}{}\hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\
   \else
       \parbox[t]{0.28\textwidth}{#4 \ Encls\\
         \begin{hangparas}{2.4ex}{1}
