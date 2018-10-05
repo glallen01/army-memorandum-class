@@ -22,7 +22,9 @@ sudo fc-cache
 ### MacOS
 The Arial font will already be installed, but you will need to install XeLaTeX [here](http://www.tug.org/mactex/index.html).
 ### Windows
-I currently don't have a method of testing this on Windows.
+- Download protex from [here](https://www.tug.org/protext/)
+- Extract and install miktex full and texstudio
+- In texstudio click Tools->Commands->XeLaTeX to compile 
 
 ## Installation and Usage
 Within a terminal:
