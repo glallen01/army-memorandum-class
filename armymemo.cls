@@ -1,179 +1,148 @@
-% Army memo class
-% Version 0.1.1 2016/03/12
-% George L. Allen base64(Z2xhbGxlbjAx) AT base64(Z21haWwuY29t)
-
+% Army memorandum class
+% Version 0.1.0 2019/01/08
+% Christian Sharpsten
+% Takes inspiration from from glallen/armymemo -
+%   George L. Allen base64(Z2xhbGxlbjAx) AT base64(Z21haWwuY29t)
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{armymemo}[2016/03/12]
+\ProvidesPackage{armymemo}[2019/01/08]
 
-\LoadClass[
-        12pt,
-        letterpaper,
-        headings=small,
-        oneside,
-        pdftex]{scrartcl}
+\LoadClass[letterpaper,12pt,oneside]{article}
 
-\RequirePackage{tikz}
+\RequirePackage{datetime}
 \RequirePackage{fancyhdr}
-\RequirePackage{helvet}
-\RequirePackage{datetime} % used to change date format
-% Set paper size and margins
-\RequirePackage[letterpaper,margin=1in,bottom=1.2in,includefoot]{geometry}
-% Setup fonts:
-%\renewcommand{\familydefault}{\sfdefault}
-\RequirePackage{fontspec} % Requires XeLatex
-\defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
-\setmainfont{Arial} % AR 25-50 recommends Arial as of 17 May 2013.  1-17b
 \RequirePackage{graphicx}
 \RequirePackage{hanging}
-% regarding ragged right and microtype
-%    http://tex.stackexchange.com/questions/134303/does-combining-microtype-with-ragged-right-make-any-sense
-%\RequirePackage[protrusion=true,expansion=false]{microtype}
-% regarding RaggedRight and \hyphenpenalty=500
-%    http://tex.stackexchange.com/questions/291685/minimize-hyphenations-with-ragged2e
-\RequirePackage{ragged2e} \RaggedRight      	% recommended by jurabib for better ragged right
-%\RequirePackage[none]{hyphenat}\raggedright
+\RequirePackage{tikz}
 
-%Setting penalties for widows and orphans: broken paragraphs with only one line
-%at the top or bottom of the page. This messes up other formatting leaving lots
-%of space at the bottom of some pages that requires manual intervention.
-%% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=widows
+% Set paper size, margins, and font
+\RequirePackage[letterpaper,margin=1in,includefoot]{geometry}
+\RequirePackage{fontspec}               % Requires XeLatex
+\defaultfontfeatures{Mapping=tex-text}  % To support LaTeX ``" quotes.
+\setmainfont{Arial}                     % AR 25-50 recommends Arial as of 08JAN2019.  1-17b
+
+% Use raggedright text, one line parskip, and no indentation
+\RequirePackage{ragged2e} \RaggedRight
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+% Don't hyphenate across pages - AR 25-50 2-5.c(3)
+\brokenpenalty=10000
+
+% Setting penalties for widows and orphans: broken paragraphs with only one line
+% at the top or bottom of the page. This messes up other formatting leaving lots
+% of space at the bottom of some pages that requires manual intervention.
+% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=widows
 \widowpenalty=10000
 \clubpenalty=10000
-\setlength{\parskip}{3ex plus 2ex minus 2ex}
 
-%\setlength{\headsep}{24pt}
-%  TODO Possible alternate solution, needs testing:
-%   http://en.wikibooks.org/wiki/LaTeX/Page_Layout#Widows_and_orphans
-%  \setlength{\parskip}{3ex plus 2ex minus 2ex}
-%  Additional reference: http://www.economics.utoronto.ca/osborne/latex/PMAKEUP.HTM
+% Letterhead variables
+\newcommand*{\department}[1]{\gdef\@department{#1}}
+\newcommand*{\unit}[1]{\gdef\@unit{#1}}
+\newcommand*{\unitaddress}[1]{\gdef\@unitaddress{#1}}
+\newcommand*{\unitcity}[1]{\gdef\@unitcity{#1}}
+\department{DEPARTMENT OF THE ARMY}
+\global\let\@unitcity\relax % optional
 
-% Army date format.  1-23a. Note, this is the long month name
+% Header variables
+\newcommand*{\officesymbol}[1]{\gdef\@officesymbol{#1}}
+\newcommand*{\memothru}[1]{\gdef\@memothru{#1}}
+\newcommand*{\memofor}[1]{\gdef\@memofor{#1}}
+\newcommand*{\subject}[1]{\gdef\@subject{#1}}
+\newcommand*{\enclosures}[1]{\gdef\@enclosures{#1}}
+\global\let\@memothru\relax       % optional
+\global\let\@enclosures\relax   % optional
+
+% Army date format. Note this is the long month name. AR25-50 Section 1-23a
 \newdateformat{armydate}{\THEDAY\ \monthname[\THEMONTH] \THEYEAR}
 
+% Commands to create armymemo items, subitems, and subsubitems
+\newcounter{ami}
+\newcounter{amii}[ami]
+\newcounter{amiii}[amii]
 
-\setlength{\parindent}{2em}
+% Use a helper macro that will indent correctly, followed by the item number
+% Items are indented by 0.25in increments - AR25-50 Figure 2-1 Paragraph 3
+% #1 Indentation
+% #2 Item number
+\newcommand*{\@amitem}[2]{\hspace{#1}\makebox[0.25in][l]{#2}}
+\newcommand*{\ami}{\refstepcounter{ami}\@amitem{0in}{\arabic{ami}. }}
+\newcommand*{\amii}{\refstepcounter{amii}\@amitem{0.25in}{\alph{amii}. }}
+\newcommand*{\amiii}{\refstepcounter{amiii}\@amitem{0.5in}{(\arabic{amiii}) }}
 
-\newcounter{ParNumi}
-\newcounter{ParNumii}[ParNumi]
-\newcounter{ParNumiii}[ParNumii]
-\newcounter{ParNumiiii}[ParNumiii]
-\newcounter{ParNumiiiii}[ParNumiiii]
-
-%added \par's for each line to force separation even without linebreaks between \Ni's
-%need to do this differently to force a newline at a \par, but to ignore
-%additional newlines if there's already a separation
-\newcommand{\Ni}{\refstepcounter{ParNumi}\noindent\makebox[\parindent][l]{\arabic{ParNumi}. }}
-\newcommand{\Nii}{\refstepcounter{ParNumii}\noindent\hspace{\parindent}\makebox[\parindent][l]{\alph{ParNumii}. }}
-\newcommand{\Niii}{\refstepcounter{ParNumiii}\noindent\hspace{2\parindent}\makebox[\parindent][l]{(\arabic{ParNumiii}) }}
-\newcommand{\Niiii}{\refstepcounter{ParNumiiii}\noindent\hspace{2\parindent}\makebox[\parindent][l]{(\alph{ParNumiiii}) }}
-%\newcommand{\Niiiii}{\refstepcounter{ParNumiiiii}\noindent\hspace{4\parindent}\makebox[\parindent][l]{(\alph{ParNumiiiii}) }}
-\newcommand{\Nx}[1]{\noindent\hspace{#1\parindent}}
-
-% #0 Department
-% #1 UNIT
-% #2 Address1
-% #3 Office Symbol
-% #4 Subject
-
-% define the saveboxes for internal use
-\newsavebox{\DEPT}
-\newsavebox{\UNIT}   
-\newsavebox{\ADDRESS}
-\newsavebox{\CITY}
-\newsavebox{\OSYMB}  
-\newsavebox{\MEMOFOR}
-\newsavebox{\SUBJECT}
-\newsavebox{\DATE}
-\newcommand{\AMdate}[1]{\sbox{\DATE}{#1}}
-\newcommand{\AMfor}[1]{\renewcommand{\AMfor}{#1}}
-\newcommand{\AMsubject}[1]{\renewcommand{\AMsubject}{#1}}
-
-\newcommand{\headfmt}[1]{\sffamily\uppercase{\footnotesize\textmd{{#1}}}}
-
-% could adjust to add other services or customizable 'dept'
-\newcommand{\AMdept}[1]{\sbox{\DEPT}{\sffamily\bfseries{{#1}}}}
-\newcommand{\AMunit}[1]{\sbox{\UNIT}{\headfmt{#1}}}
-\newcommand{\AMaddress}[1]{\sbox{\ADDRESS}{\headfmt{#1}}}
-\newcommand{\AMcity}[1]{\sbox{\CITY}{\headfmt{#1}}}
-\newcommand{\AMsymbol}[1]{\sbox{\OSYMB}{#1}}
-%\newcommand{\AMsubject}[1]{\sbox{\SUBJECT}{#1}}
-%\newcommand{\AMfor}[1]{\sbox{\MEMOFOR}{#1}}
-
-%\newcommand{\AMfor}[1][MEMORANDUM FOR RECORD]{\newsavebox{\MEMOFOR}\sbox{\MEMOFOR}{#1}}
-
-
-\setkomafont{pagehead}{\normalfont}
-\setkomafont{pagefoot}{\normalfont}
-\setkomafont{pagenumber}{\normalfont}
-\setkomafont{disposition}{\normalfont}
-\setkomafont{disposition}{\normalfont}
-
-\fancypagestyle{plain}{%
-\fancyhf{} %clear all header and footer fields
-\lhead{% still wrapping logo in header for the moment to keep on page1
-{\begin{tikzpicture}[remember picture, overlay]
-% Thanks @pconwell for the tikz logo placement:
-%   "don't ask why the picture has to be shifted to these somwewhat random
-%   coordinates - I don't know. But this is what gets the seal to 0.5in from top
-%   and left." --@pconwell
-\node [xshift=-0.25in,yshift=0.3125in] at (0,0) {\includegraphics[height=1in]{DODb1.eps}};
-\end{tikzpicture}}}
-\chead{%HEADER and SECTION ADDRESS
-\usebox{\DEPT}\\
-\usebox{\UNIT}\\
-\usebox{\ADDRESS}\\
-\usebox{\CITY}}
-\renewcommand{\headrulewidth}{0.0pt}
-\renewcommand{\footrulewidth}{0.0pt}
-}
-
-\fancypagestyle{body}{%
-%\lhead[]{\newgeometry{margin=1.0in,includefoot}\usebox{\OSYMB}\\SUBJECT: \AMsubject\\[24pt]}
-\lhead[]{\usebox{\OSYMB}\\SUBJECT: \AMsubject}%[24pt]}
-\fancyfoot[C]{\thepage}
-\renewcommand{\headrulewidth}{0.0pt}
-\renewcommand{\footrulewidth}{0.0pt}
-}
-
-\newcommand{\AMsethead}{\setlength{\parskip}{0pt}\thispagestyle{plain}\pagestyle{body}
-~\vspace*{24pt}~\\
-\noindent\usebox{\OSYMB}\hfill\armydate\usebox{\DATE}\\~\\
-%\noindent\usebox{\OSYMB}\hfill\armydate\today\\\ \\ \ \\ % two blank lines 2-4a.5
-%\noindent\usebox{\OSYMB}\hfill\armydate\today\\\ \\ \ \\ % three blank lines 2-4a.5
-\noindent \AMfor\\~\\
-\noindent SUBJECT: \AMsubject\\~\\
-%\noindent SUBJECT: \AMsubject\\\ \\% two blank lines 2-4b.1
-% \setlength{\parskip}{10pt plus 2ex minus 2ex}%\vspace*{-24pt}
- \setlength{\parskip}{2ex plus 1ex minus 1ex} % TEST
+\newcommand{\makeheader}{
+  \thispagestyle{plain}
+  \pagestyle{body}
+  \@officesymbol\hfill\armydate\@date\\~\\~\\
+  \ifdefvoid{\@memothru}{
+    MEMORANDUM FOR \@memofor\\~\\
+  }{
+    MEMORANDUM THRU \@memothru\\~\\
+    FOR \@memofor\\~\\
+  }
+  SUBJECT: \@subject\\~\\~\\
 }
 
 % #1 Name
 % #2 Rank, Branch
 % #3 Title
-% #4 Enclosures
-\newcommand{\AMsigblock}[4]{%
-\setlength{\parskip}{0pt}
-\vspace{48pt}
-\noindent\begin{minipage}[t]{\textwidth}
-  \parbox[t]{0.28\textwidth}{Encl:\\%
-    \begin{hangparas}{2.4ex}{1}
-      #4%
-    \end{hangparas}
-}% Encls
-  \hfill\parbox[t]{0.5\textwidth}{\uppercase{#1\\#2}\\#3}\\ % Name, Rank/Br, Title
-\end{minipage}
+\newcommand{\makesigblock}[3]{
+  \setlength{\parskip}{0pt}
+  \begin{minipage}[t]{\textwidth}   % minipage to keep sigblock on one page
+    \vspace{3\baselineskip}
+    \ifdefvoid{\@enclosures}{}{
+      \parbox[t]{0.28\textwidth}{Encl:\\
+        \begin{hangparas}{0.25in}{1}
+          \@enclosures
+        \end{hangparas}
+      }
+    }
+    \hfill\parbox[t]{0.5\textwidth}{%
+      \MakeUppercase{#1}\\
+      \MakeUppercase{#2}\\
+      #3
+    }
+  \end{minipage}
 }
 
-\newcommand{\AMcf}[1]{\\[24pt]\noindent{}\parbox[t]{\textwidth}{CF: \\#1}}
+% Redefine the plain page style. This style should be applied automatically by the \makeheader
+% command. This style creates the memo letterhead.
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \setlength{\headheight}{56pt}
 
-\newcommand{\AMMOAsig}[7]{
-	\setlength{\parskip}{0pt}
-	\vspace{48pt}
-	\begin{minipage}{\textwidth}
-	\noindent\parbox[t]{0.45\textwidth}{\noindent #1\\#2\\#3}
-	\hfill\parbox[t]{0.45\textwidth}{\uppercase{#4\\#5}\\#6}
-	\end{minipage}
-	\ \\\vspace{24pt}
-	\noindent\parbox[t]{2in}{\noindent #7}
+  \lhead{
+    {\begin{tikzpicture}[remember picture, overlay]
+      \node[yshift=20pt] at (0,0) {\includegraphics[height=1in]{dodlogo.eps}};
+    \end{tikzpicture}}
+  }
+
+  \chead{
+    {\begin{sffamily}\begin{bfseries}
+      {\footnotesize\MakeUppercase{\@department}} \\
+      {\scriptsize
+        \MakeUppercase{\@unit} \\
+        \MakeUppercase{\@unitaddress} \\
+        \MakeUppercase{\@unitcity} \\
+      }
+    \end{bfseries}\end{sffamily}}
+  }
+
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+% Define the page style for the body of the memo. This style should be applied automatically by the
+% \makeheader command. This style will apply to all pages except the first.
+\fancypagestyle{body}{
+  \setlength{\headheight}{30pt}
+
+  \lhead[]{
+    \@officesymbol\\
+    SUBJECT: \@subject
+  }
+  \fancyfoot[C]{\thepage}
+
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
 }
