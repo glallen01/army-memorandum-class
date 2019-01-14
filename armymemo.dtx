@@ -1,0 +1,422 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2011 George L. Allen
+% Copyright (C) 2019 Christian J. Sharpsten
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License along
+% with this program; if not, write to the Free Software Foundation, Inc.,
+% 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{armymemo.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[2016/02/01]
+%<package>\ProvidesPackage{armymemo}
+%<*package>
+    [2019/01/12 v1.0.0 U.S. Army Memorandum Class]
+%</package>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{armymemo.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v1.0.0}{2019/01/12}{Initial version}
+%
+% \GetFileInfo{armymemo.dtx}
+%
+% \DoNotIndex{\\,\alph,\arabic,\armydate}
+% \DoNotIndex{\baselineskip,\begin,\brokenpenalty}
+% \DoNotIndex{\chead,\clubpenalty}
+% \DoNotIndex{\defaultfontfeatures}
+% \DoNotIndex{\end}
+% \DoNotIndex{\fancyfoot,\fancyhf,\fancypagestyle,\footnotesize,\footrulewidth}
+% \DoNotIndex{\gdef,\global}
+% \DoNotIndex{\headheight,\headrulewidth,\hfill,\hspace}
+% \DoNotIndex{\ifdefvoid,\includegraphics}
+% \DoNotIndex{\let,\lhead,\LoadClass}
+% \DoNotIndex{\makebox,\MakeUppercase,\monthname}
+% \DoNotIndex{\newcommand,\newcounter,\newdateformat,\node}
+% \DoNotIndex{\pagestyle,\parbox,\parindent,\parskip}
+% \DoNotIndex{\RaggedRight,\refstepcounter,\relax,\renewcommand}
+% \DoNotIndex{\RequirePackage}
+% \DoNotIndex{\scriptsize,\setlength,\setmainfont}
+% \DoNotIndex{\textwidth,\THEDAY,\THEMONTH,\thepage,\THEYEAR,\thispagestyle}
+% \DoNotIndex{\vspace}
+% \DoNotIndex{\widowpenalty}
+%
+% \DoNotIndex{\@amitem,\am@department,\am@enclosures,\am@memofor,\am@memothru}
+% \DoNotIndex{\am@officesymbol,\am@subject,\am@unit,\am@unitaddress}
+% \DoNotIndex{\am@unitcity}
+%
+% \title{The \textsf{armymemo} package\thanks{This document
+%   corresponds to \textsf{armymemo}~\fileversion,
+%   dated \filedate.}}
+% \author{Christian J. Sharpsten}
+%
+% \maketitle
+%
+% \begin{abstract}
+%   The \textsf{armymemo} package provides a class to create U.S. Army
+%   memorandums in accordance with AR 25-50. It provides proper formatting
+%   and macros for common blocks in a memo.
+% \end{abstract}
+%
+% \section{Introduction}
+%
+% As with to the article class, you can use |armymemo| by
+% declaring it as your |documentclass| and defining a few macros in the
+% document header.
+%
+% \begin{quote}
+% |\documentclass{armymemo}|\\
+%
+% |\unit{ORGANIZATIONAL NAME/TITLE}|\\
+% |\unitaddress{STANDARDIZED STREET ADDRESS}|\\
+% |\unitcity{CITY STATE 12345-1234}|\\
+%
+% |\officesymbol{OFFICE SYMBOL}|\\
+% |\memofor{U.S. Army Command and General Staff College (ATZL),|\\
+% |    100 Stimson Avenue, Ft Leavenworth, KS 66027-1352}|\\
+% |\subject{Using and Preparing a Memorandum}|
+% \end{quote}
+%
+% The above macros are required to properly create a memorandum
+% header. Additionally, there are other optional macros that can be used
+% to further customize the memorandum header. Once declared, the header and
+% page style can be applied with the |\makeheader| macro.
+%
+% \begin{quote}
+% |\begin{document}|\\
+% |\makeheader|
+% \end{quote}
+%
+% The |\makeheader| macro generates the letterhead as well as the header for
+% additional pages. It also creates the THRU, FOR, and SUBJECT lines on the
+% first page of the memorandum.
+%
+% To define the body of the memo, |armymemo| provides three macros: |\ami|,
+% |\amii|, and |\amiii|. These correspond to 0, 1, and 2 levels of indentation
+% respectively. Once the memo body is complete, you can generate a signature
+% block with |\makesigblock|.
+%
+% \begin{quote}
+% |\ami Short, clear purpose sentence|\\
+%
+% |\ami Second item|\\
+%
+% |\amii Subitem a|\\
+%
+% |\amii Subitem b|\\
+%
+% |\makesigblock{JOHN W. SMITH}{Colonel, GS}{Chief of Staff}|\\
+%
+% |\end{document}|
+% \end{quote}
+%
+% If there are enclosures, they can optionally be listed with the |\enclosures|
+% macro in the document header. |\makesigblock| will insert them appropriately.
+%
+% \section{Macros}
+% \setlength{\parindent}{0pt}
+%
+% The following macros can be used in the document header to define the
+% letterhead and memo header contents.\\
+%
+% \DescribeMacro{\department}
+% Optional. Set the letterhead department. Defaults to\\
+% ``DEPARTMENT OF THE ARMY''.
+%
+% \DescribeMacro{\unit}
+% Unit name. Displayed in the letterhead.
+%
+% \DescribeMacro{\unitaddress}
+% Unit street address. Displayed in the letterhead.
+%
+% \DescribeMacro{\unitcity}
+% Unit city and nine-digit zip code. Displayed in the letterhead.
+%
+% \DescribeMacro{\officesymbol}
+% Office symbol for the memorandum originator.
+%
+% \DescribeMacro{\date}
+% Optional. Date for the memo. As described in AR 25-50, dates should be in
+% the following format: ``1 January 2013'' or ``1 Jan 13''. |armymemo| defaults
+% to |\today| in the long date format.
+%
+% \DescribeMacro{\memothru}
+% Optional. Use a memorandum “THRU” to let other personnel know what is being
+% done and give them the opportunity to comment, especially if their comment
+% will affect the action. If there are multiple recipients on the THRU line,
+% ensure the argument to this macro is prefixed with two blank lines.
+%
+% \DescribeMacro{\memofor}
+% The office that is expected to complete the action.
+%
+% \DescribeMacro{\subject}
+% Subject for the memorandum, 10 words or less if possible.
+%
+% \DescribeMacro{\enclosures}
+% Optional. A list of enclosures.
+%
+% \vspace{\baselineskip}
+% The following macros can be used in the document body to create memo
+% elements.\\
+%
+% \DescribeMacro{\makeheader}
+% Create the memorandum header, including the THRU, FOR, and SUBJECT lines.
+% This macro will also apply any page styles needed to set the header and
+% footer correctly.
+%
+% \DescribeMacro{\ami}
+% Top-level paragraph. Items will be numbered.
+%
+% \DescribeMacro{\amii}
+% Indented subparagraph. Items will be enumerated alphabetically.
+%
+% \DescribeMacro{\amiii}
+% Twice-indented sub-paragraph. Items will be numbered and enclosed in
+% parentheses.
+%
+% \DescribeMacro{\makesigblock}
+% Create the signature block. This macro accepts three parameters. In order,
+% the parameters are |{name}|, |{rank, branch}|, and |{title}|. This macro
+% also includes the enclosure listing to the left of the signature block.
+%
+% \StopEventually{\PrintIndex}
+%
+% \section{Implementation}
+%
+% |armymemo| inherits from |article|. Before declaring any of the macros, we
+% include a few packages we depend on.
+%    \begin{macrocode}
+\LoadClass[letterpaper,12pt,oneside]{article}
+\RequirePackage{datetime}
+\RequirePackage{fancyhdr}
+\RequirePackage{graphicx}
+\RequirePackage{hanging}
+\RequirePackage{tikz}
+%    \end{macrocode}
+%
+% AR 25-50 calls for 8.5in x 11in paper and 1in margins on all sides (2-3).
+% Preferred font is Arial with a point size of 12 (1-17). The fontspec
+% package limits this package to xelatex. In order to support \LaTeX ``''
+% quotes, we define |Mapping=tex-text|.
+%    \begin{macrocode}
+\RequirePackage[letterpaper,margin=1in,includefoot]{geometry}
+\RequirePackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{Arial}
+%    \end{macrocode}
+%
+% Set text wrapping behavior and penalties for widows, orphans, and hyphenation
+% across pages. Army memorandums use raggedright text, one line between
+% paragraphs, and no indentation. Set max penalties for undesirable page
+% breaking behavior in order to satisfy AR 25-50 2-5.c(1) and 2.5.c(3).
+%    \begin{macrocode}
+\RequirePackage{ragged2e} \RaggedRight
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+\widowpenalty=10000
+\clubpenalty=10000
+\brokenpenalty=10000
+%    \end{macrocode}
+%
+% Army date format. Note this is the long month name. AR25-50 1-23.a
+%    \begin{macrocode}
+\newdateformat{armydate}{\THEDAY{} \monthname[\THEMONTH] \THEYEAR}
+%    \end{macrocode}
+%
+% \begin{macro}{\department}
+% \begin{macro}{\unit}
+% \begin{macro}{\unitaddress}
+% \begin{macro}{\unitcity}
+% The |\deparment|, |\unit|, |\unitaddress|, and |\unitcity| macros define the
+% values used to populate the memorandum letterhead.
+%    \begin{macrocode}
+\newcommand*{\department}[1]{\gdef\am@department{#1}}
+\newcommand*{\unit}[1]{\gdef\am@unit{#1}}
+\newcommand*{\unitaddress}[1]{\gdef\am@unitaddress{#1}}
+\newcommand*{\unitcity}[1]{\gdef\am@unitcity{#1}}
+\department{DEPARTMENT OF THE ARMY}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\officesymbol}
+% \begin{macro}{\memothru}
+% \begin{macro}{\memofor}
+% \begin{macro}{\subject}
+% \begin{macro}{\enclosures}
+% The |\officesymbol|, |\memothru|, |\memofor|, and |\subject| macros
+% define the values used to populate the memorandum header. The
+% |\enclosures| macro defines any enclosures included at the end of
+% the memorandum.
+%    \begin{macrocode}
+\newcommand*{\officesymbol}[1]{\gdef\am@officesymbol{#1}}
+\newcommand*{\memothru}[1]{\gdef\am@memothru{#1}}
+\newcommand*{\memofor}[1]{\gdef\am@memofor{#1}}
+\newcommand*{\subject}[1]{\gdef\am@subject{#1}}
+\newcommand*{\enclosures}[1]{\gdef\am@enclosures{#1}}
+\global\let\am@memothru\relax     % optional
+\global\let\am@enclosures\relax   % optional
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\ami}
+% \begin{macro}{\amii}
+% \begin{macro}{\amiii}
+% The |\ami|, |\amii|, and |\amiii| macros create items, subitems, and
+% subsubitems. Subitems are indented by 0.25in increments in accordance with
+% AR 25-50 fig 2-1, paragraph 3.
+%    \begin{macrocode}
+\newcounter{ami}
+\newcounter{amii}[ami]
+\newcounter{amiii}[amii]
+\newcommand*{\@amitem}[2]{\hspace{#1}\makebox[0.25in][l]{#2}}
+\newcommand*{\ami}{\refstepcounter{ami}\@amitem{0in}{\arabic{ami}. }}
+\newcommand*{\amii}{\refstepcounter{amii}\@amitem{0.25in}{\alph{amii}. }}
+\newcommand*{\amiii}{\refstepcounter{amiii}\@amitem{0.5in}{(\arabic{amiii}) }}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\makeheader}
+% If |\amthru| is specified, |\makeheader| will insert a THRU block prior to
+% the FOR block. It will insert the appropriate header and set page styles for
+% the rest of the document.
+%    \begin{macrocode}
+\newcommand{\makeheader}{
+  \thispagestyle{plain}
+  \pagestyle{body}
+  \am@officesymbol\hfill\armydate\@date\\~\\~\\
+  \ifdefvoid{\am@memothru}{
+    MEMORANDUM FOR \am@memofor\\~\\
+  }{
+    MEMORANDUM THRU \am@memothru\\~\\
+    FOR \am@memofor\\~\\
+  }
+  SUBJECT: \am@subject\\~\\~\\
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\makesigblock}
+% The |\makesigblock| macro will insert a signature block along with any
+% enclosures if specified.
+%    \begin{macrocode}
+\newcommand{\makesigblock}[3]{
+  \setlength{\parskip}{0pt}
+  \begin{minipage}[t]{\textwidth}
+    \vspace{3\baselineskip}
+    \ifdefvoid{\am@enclosures}{}{
+      \parbox[t]{0.28\textwidth}{Encl:\\
+        \begin{hangparas}{0.25in}{1}
+          \am@enclosures
+        \end{hangparas}
+      }
+    }
+    \hfill\parbox[t]{0.5\textwidth}{%
+      \MakeUppercase{#1}\\
+      \MakeUppercase{#2}\\
+      #3
+    }
+  \end{minipage}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% Redefine the plain page style. This style should be applied automatically by
+% the |\makeheader| command. This style creates the memo letterhead.
+%    \begin{macrocode}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \setlength{\headheight}{56pt}
+
+  \lhead{
+    {\begin{tikzpicture}[remember picture, overlay]
+      \node[yshift=20pt] at (0,0) {\includegraphics[height=1in]{dodlogo.eps}};
+    \end{tikzpicture}}
+  }
+
+  \chead{
+    {\begin{sffamily}\begin{bfseries}
+      {\footnotesize\MakeUppercase{\am@department}} \\
+      {\scriptsize
+        \MakeUppercase{\am@unit} \\
+        \MakeUppercase{\am@unitaddress} \\
+        \MakeUppercase{\am@unitcity} \\
+      }
+    \end{bfseries}\end{sffamily}}
+  }
+
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+%    \end{macrocode}
+%
+% Define the page style for the memo body. This style should be applied
+% automatically by the |\makeheader| command. This style will apply to all
+% pages except the first.
+%    \begin{macrocode}
+\fancypagestyle{body}{
+  \setlength{\headheight}{30pt}
+
+  \lhead[]{
+    \am@officesymbol\\
+    SUBJECT: \am@subject
+  }
+  \fancyfoot[C]{\thepage}
+
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+%    \end{macrocode}
+%
+% \Finale
+\endinput

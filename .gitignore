@@ -1,4 +1,10 @@
 *.aux
+*.cls
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
 *.log
 *.pdf
 *.swp

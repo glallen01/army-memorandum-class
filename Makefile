@@ -1,32 +1,24 @@
-pdf: example.pdf
+TEXMFHOME := $(shell kpsewhich -var-value=TEXMFHOME)
+INSTALL_DIR := $(TEXMFHOME)/tex/xelatex
 
+all: armymemo.cls armymemo.pdf
 
-example.pdf: example.tex armymemo.cls
-	xelatex example.tex
-	xelatex example.tex
+doc: armymemo.pdf
+
+install: armymemo.cls dodlogo.eps
+	mkdir -p $(INSTALL_DIR)
+	cp $^ $(INSTALL_DIR)
+
+dist: armymemo.cls armymemo.pdf
+
+armymemo.cls: armymemo.ins armymemo.dtx
+	latex $<
+
+armymemo.pdf: armymemo.dtx
+	pdflatex $<
+	makeindex -s gglo.ist -o armymemo.gls armymemo.glo
+	makeindex -s gind.ist -o armymemo.ind armymemo.idx
+	pdflatex $<
 
 clean:
-	-rm -f \
-		*-blx.bib \
-		*.aux \
-		*.bbl \
-		*.bcf \
-		*.blg \
-		*.brf \
-		*.dvi \
-		*.ent \
-		*.fdb_latexmk \
-		*.idx \
-		*.ilg \
-		*.ind \
-		*.lof \
-		*.log \
-		*.lot \
-		*.orig \
-		*.out \
-		*.pdf \
-		*.rtf \
-		*.run.xml \
-		*.toc \
-		*.url 
-
+	$(RM) *.aux *.cls *.glo *.gls *.idx *.ilg *.ind *.log *.pdf
