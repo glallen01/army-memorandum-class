@@ -1,8 +1,24 @@
 # Army Memorandum LaTeX Class
 
-Provides a basic AR 25-50 memo in latex.
+This package provides a document class for Army memorandums in accordance with
+AR 25-50.
 
-Requires xelatex for font handling.
+This package requires xelatex for font processing and the Arial font. To
+install the font in debian:
+
+    sudo apt-get install ttf-mscorefonts-installer
+    sudo fc-cache
+
+To install this class, copy armymemo.cls and dodlogo.eps to your xelatex
+directory. You can do so with the following command.
+
+    cp armymemo.cls dodlogo.eps `kpsewhich -var-value=TEXMFHOME`/tex/xelatex/armymemo/
+
+To build and install from source, you can use the provided Makefile or extract
+the .cls file and documentation manually with latex.
+
+    make
+    make install
 
 
 ## Copyright

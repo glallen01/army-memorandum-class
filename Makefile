@@ -9,7 +9,11 @@ install: armymemo.cls dodlogo.eps
 	mkdir -p $(INSTALL_DIR)
 	cp $^ $(INSTALL_DIR)
 
-dist: armymemo.cls armymemo.pdf
+dist: armymemo.dtx armymemo.ins armymemo.pdf dodlogo.eps README.md
+	mkdir armymemo
+	cp $^ armymemo/
+	tar czf armymemo.tar.gz armymemo
+	$(RM) -r armymemo
 
 armymemo.cls: armymemo.ins armymemo.dtx
 	latex $<
@@ -21,4 +25,4 @@ armymemo.pdf: armymemo.dtx
 	pdflatex $<
 
 clean:
-	$(RM) *.aux *.cls *.glo *.gls *.idx *.ilg *.ind *.log *.pdf
+	$(RM) *.aux *.cls *.glo *.gls *.idx *.ilg *.ind *.log *.pdf *.tar.gz
