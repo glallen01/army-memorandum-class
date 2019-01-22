@@ -277,6 +277,9 @@
 \newcommand*{\unitaddress}[1]{\gdef\am@unitaddress{#1}}
 \newcommand*{\unitcity}[1]{\gdef\am@unitcity{#1}}
 \department{DEPARTMENT OF THE ARMY}
+\newcommand*{\am@unit}{\ClassError{armymemo}{No \@backslashchar unit given}{}}
+\newcommand*{\am@unitaddress}{\ClassError{armymemo}{No \@backslashchar unitaddress given}{}}
+\newcommand*{\am@unitcity}{\ClassError{armymemo}{No \@backslashchar unitcity given}{}}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -298,7 +301,10 @@
 \newcommand*{\memofor}[1]{\gdef\am@memofor{#1}}
 \newcommand*{\subject}[1]{\gdef\am@subject{#1}}
 \newcommand*{\enclosures}[1]{\gdef\am@enclosures{#1}}
+\newcommand*{\am@officesymbol}{\ClassError{armymemo}{No \@backslashchar officesymbol given}{}}
 \global\let\am@memothru\relax     % optional
+\newcommand*{\am@memofor}{\ClassError{armymemo}{No \@backslashchar memofor given}{}}
+\newcommand*{\am@subject}{\ClassError{armymemo}{No \@backslashchar subject given}{}}
 \global\let\am@enclosures\relax   % optional
 %    \end{macrocode}
 % \end{macro}
