@@ -6,19 +6,19 @@
 \ProvidesPackage{armymemo}[2019/03/10]
 
 \LoadClass[
-  12pt
-  ,oneside
-  ,parskip=half-
-  ,headings=small
-  ,DIV=15
+  12pt,
+  oneside,
+  parskip=half-,
+  headings=small,
+  DIV=15
 ]{scrartcl}
 
 % https://tex.stackexchange.com/a/212214
 % BUG: something is messing with this, so for now moving it to the top 
-\AtEndDocument{
-\vspace*{4\baselineskip}
+\AtEndDocument{%
+  \vspace*{4\baselineskip}
   \am@EnclAndDistro
-  \signatureblock
+  \signatureblock%
 }
 
 %\usepackage{blindtext}
@@ -55,7 +55,7 @@
   \renewlist{enumerate}{enumerate}{9}
   \setlistdepth{9}
 \RequirePackage{ragged2e}
-  \RaggedRight
+  \RaggedRight%
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
 \ProcessOptions\relax
 
@@ -81,7 +81,7 @@
 \renewcommand{\theenumii}{\alph{enumii}}\renewcommand{\labelenumii}{\theenumii.}
 \renewcommand{\theenumiii}{\arabic{enumiii}}\renewcommand{\labelenumiii}{(\theenumiii)}
 \renewcommand{\theenumiv}{\alph{enumiv}}\renewcommand{\labelenumiv}{(\theenumiv)}
-\setlist[1]{labelwidth=12pt,labelsep=4pt,leftmargin=0pt,itemindent=16pt ,align=left}
+\setlist[1]{labelwidth=12pt,labelsep=4pt,leftmargin=0pt,itemindent=16pt,align=left}
 \setlist[2]{labelwidth=12pt,labelsep=4pt,leftmargin=0pt,itemindent=0.5in,align=left}
 \setlist[3]{labelwidth=12pt,labelsep=4pt,leftmargin=0pt,itemindent=0.75in,align=left}
 \setlist[4]{labelwidth=12pt,labelsep=4pt,leftmargin=0pt,itemindent=0.75in,align=left}
@@ -115,21 +115,19 @@
 
 \RequirePackage{scrlayer-scrpage}
 \setlength{\headheight}{2\baselineskip}
-\clearpairofpagestyles
+\clearpairofpagestyles%
 \lohead[]{\usebox{\am@officesymbol}\hspace*{\fill}\usebox{\am@signaturedate}\\\usebox{\am@subject}}
 \cofoot[]{\thepage}
 \pagestyle{scrheadings}
 
-\newcommand{\CLASSMARK}
-{
+\newcommand{\CLASSMARK}{%
   \begin{tikzpicture}[remember picture, overlay]
     \node[align=center,anchor=north,yshift=-24pt] at (current page.north) {UNCLASSIFIED//FOR OFFICIAL USE ONLY};
     \node[align=center,anchor=south,yshift=36pt] at (current page.south) {UNCLASSIFIED//FOR OFFICIAL USE ONLY};
   \end{tikzpicture}
 }
 
-\newcommand{\dodlogo}%
-{%
+\newcommand{\dodlogo}{%
   \begin{tikzpicture}[remember picture, overlay]%
     \node[anchor=north west,inner sep=0pt,xshift=0.5in, yshift=-0.5in]%
       at (current page.north west) {\includegraphics[width=1in]{DODb1}};%
@@ -139,8 +137,7 @@
 \newcommand{\daletterhead}[1]{\fontsize{10pt}{10pt}\selectfont\textbf{\uppercase{#1}}\\}
 \newcommand{\letterhead}[1]{\fontsize{8pt}{5pt}\selectfont\textbf{\uppercase{#1}}\\}
 
-\newcommand{\dodheader}%
-{%
+\newcommand{\dodheader}{%
   \thispagestyle{plain}%
   \begin{tikzpicture}[remember picture, overlay]%
     \setstretch{0.7}\fontfamily\sfdefault\selectfont%
@@ -158,8 +155,7 @@
   \noindent\usebox{\am@subject}\\[0 pt]%
 }
 
-\newcommand{\signatureblock}
-{
+\newcommand{\signatureblock}{%
   \begin{minipage}[t]{0.49\textwidth}
     \usebox{\am@author}\\ 
     \usebox{\am@rank}, \usebox{\am@branch}\\
@@ -167,36 +163,27 @@
   \end{minipage}
 }
 
-\newcommand{\am@encls}{
+\newcommand{\am@encls}{%
   1 Encls
-  \begin{enumerate}[
-    topsep=0pt
-    ,itemsep=0pt
-    ,parsep=0pt
-    ,leftmargin=16pt
-    ,itemindent=0pt
-    ,align=left
-    ,label={\arabic*.}
-    ]
-  \item AR 25-50
+  \begin{enumerate}[topsep=0pt,itemsep=0pt,parsep=0pt,leftmargin=16pt,itemindent=0pt,align=left,label={\arabic*.}]
+  \item AR 25--50
   \end{enumerate}
   
 }
 
-\newcommand{\am@distro}{
+\newcommand{\am@distro}{%
   DISTRIBUTION:\\%
   CDR\\
   S3\\
 }
 
-\newcommand{\am@cf}{
+\newcommand{\am@cf}{%
   CF:\\
   CFline1\\
   CFline2
 }
 
-\newcommand{\am@EnclAndDistro}
-{
+\newcommand{\am@EnclAndDistro}{%
   \begin{minipage}[t]{0.49\textwidth}
     \am@encls
     \ \newline
@@ -206,9 +193,9 @@
   \end{minipage}
 }
 
-\AtBeginDocument{
-  \backgroundsetup{opacity=1, scale=1, angle=0, contents={\CLASSMARK}}\BgThispage
-  \dodlogo
-  \dodheader
+\AtBeginDocument{%
+  \backgroundsetup{opacity=1, scale=1, angle=0, contents={\CLASSMARK}}\BgThispage%
+  \dodlogo%
+  \dodheader%
   \vspace*{2\baselineskip}
 }
