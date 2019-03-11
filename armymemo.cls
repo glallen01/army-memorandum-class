@@ -13,6 +13,20 @@
   ,DIV=15
 ]{scrartcl}
 
+% https://tex.stackexchange.com/a/212214
+% BUG: something is messing with this, so for now moving it to the top 
+\AtEndDocument{
+\vspace*{4\baselineskip}
+  \am@EnclAndDistro
+  \signatureblock
+}
+
+%\usepackage{blindtext}
+
+% do I need this later? https://tex.stackexchange.com/a/64615
+% \usepackage[colorlinks=true,urlcolor=blue,citecolor=blue,breaklinks=true]{hyperref}
+% \urlstyle{same}
+
 % Setting penalties for widows and orphans: broken paragraphs with only one line
 % at the top or bottom of the page. This messes up other formatting leaving lots
 % of space at the bottom of some pages that requires manual intervention.
@@ -140,7 +154,7 @@
   \vspace{-6pt}%
 
   \noindent\usebox{\am@officesymbol}\hspace*{\fill}\usebox{\am@signaturedate}\\[24pt]%
-  \noindent\usebox{\am@memoline}\\[12pt]%
+  \noindent\unhbox\am@memoline\\[12pt]% https://tex.stackexchange.com/a/202899 (there may be an easier way, etoolbox?)
   \noindent\usebox{\am@subject}\\[0 pt]%
 }
 
@@ -198,16 +212,3 @@
   \dodheader
   \vspace*{2\baselineskip}
 }
-
-\newcommand{\SignatureEnclAndDistro}{
-  \vspace*{4\baselineskip}
-  \am@EnclAndDistro
-  \signatureblock
-}
-
-\AtEndDocument{
-  %\vspace*{4\baselineskip}
-  % \am@EnclAndDistro
-  % \signatureblock
-}
-
