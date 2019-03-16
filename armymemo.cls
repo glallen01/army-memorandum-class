@@ -1,9 +1,9 @@
 % Army memo class
-% Version 0.2.1 2019/03/10
+
 % George Allen base64(Z2xhbGxlbjAx) AT base64(Z21haWwuY29t)
 
+\ProvidesClass{armymemo}[2019/03/10 0.2.1 Army Memorandum Class]
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{armymemo}[2019/03/10]
 
 \LoadClass[
   12pt,
@@ -12,14 +12,6 @@
   headings=small,
   DIV=15
 ]{scrartcl}
-
-% https://tex.stackexchange.com/a/212214
-% BUG: something is messing with this, so for now moving it to the top 
-\AtEndDocument{%
-  \vspace*{4\baselineskip}
-  \am@EnclAndDistro
-  \signatureblock%
-}
 
 %\usepackage{blindtext}
 
@@ -34,46 +26,94 @@
 \widowpenalty=10000
 \clubpenalty=10000
 
-\RequirePackage[dvipsnames]{xcolor}
-\RequirePackage[letterpaper,margin=1in,includehead]{geometry}
-\RequirePackage[normalem]{ulem}
-\RequirePackage{booktabs}
-\RequirePackage{datetime} % used to change date format
-\RequirePackage{graphicx}
-\RequirePackage{hanging}
-\RequirePackage{longtable}
-\RequirePackage{setspace}
-\RequirePackage{tikz}
-\RequirePackage[pages=all,color=black]{background} % for markings
-\RequirePackage{array}
-  \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+% Setup fonts:
 \RequirePackage[utf8]{inputenc}
+% allow automatic quote expansion
 \RequirePackage{csquotes}
-  \MakeOuterQuote{"}  
+\MakeOuterQuote{"}
+% for font selection
+\RequirePackage{fontspec}
+\RequirePackage[english]{babel}
+% AR 25-50 recommends Arial as of 17 May 2013.  1-17b
+\setmainfont{Arial}
+\setsansfont{Arial}
+\defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
+
+\AtBeginDocument{%
+  \backgroundsetup{opacity=1, scale=1, angle=0, contents={\CLASSMARK}}\BgThispage%
+  \dodlogo%
+  \dodheader%
+  \vspace*{2\baselineskip}
+}
+
+
+% \typeout{===========>}\show\@enddocumenthook
+% https://tex.stackexchange.com/a/212214
+% BUG: something is messing with this, so for now moving it to the top 
+\AtEndDocument{%
+  \noindent\unhbox\am@authorityline\\
+  \vspace*{4\baselineskip}
+  \am@EnclAndDistro
+  \signatureblock%
+}
+
+% for future use of colors in classification markings
+\RequirePackage[dvipsnames]{xcolor}
+% for margins
+\RequirePackage[letterpaper,margin=1in,includehead]{geometry}
+
+% used to change date format
+\RequirePackage{datetime}
+% for logo and other includes
+\RequirePackage{graphicx}
+% required for graphics placement
+\RequirePackage{tikz}
+% for overlay of classification markings without affecting layout
+\RequirePackage[pages=all,color=black]{background}
+% required to enable high-depth nested lists, and custom numbering
 \RequirePackage{enumitem}
-  \setlist{topsep=0pt,itemsep=0pt,parsep=0pt}
-  \renewlist{enumerate}{enumerate}{9}
-  \setlistdepth{9}
-\RequirePackage{ragged2e}
-  \RaggedRight%
+\setlist{topsep=0pt,itemsep=0pt,parsep=0pt}
+\renewlist{enumerate}{enumerate}{9}
+\setlistdepth{9}
+% required for \setstretch used in header
+\RequirePackage{setspace}
+
+% process class options
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
 \ProcessOptions\relax
 
-% Setup fonts:
+% TODO probably not needed ?
+%---------------------------
+% \RequirePackage{hanging}
 
-\RequirePackage{fontspec} % Requires XeLatex
-\RequirePackage[english]{babel}
-  \setmainfont{Arial} % AR 25-50 recommends Arial as of 17 May 2013.  1-17b
-  \setsansfont{Arial}
-  \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
+% \RequirePackage[normalem]{ulem}
 
-  % regarding ragged right and microtype
-  % http://tex.stackexchange.com/questions/134303/does-combining-microtype-with-ragged-right-make-any-sense
-\RequirePackage[protrusion=true,expansion=false]{microtype}
-  % regarding RaggedRight and \hyphenpenalty=500
-  % http://tex.stackexchange.com/questions/291685/minimize-hyphenations-with-ragged2e
-  
-  % \RequirePackage[none]{hyphenat}\raggedright
+% we don't always do tables, but when we do:
+\RequirePackage{booktabs}
+\RequirePackage{longtable}
+% for additional paragraph column types in tables
+\RequirePackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+% \RaggedRight is a bit more compact, but allows lots of hyphens
+% reduce hyphens with a combination of \hypenpenalty and microtype
+\RequirePackage{microtype}
+\RequirePackage{ragged2e}
+\RaggedRight
+% AR 25-50 allows for hyphenation (just not across pages, which LaTeX won't do
+% anyway) we just want less hyphenation than more
+\hyphenpenalty=5000
+% \RequirePackage[none]{hyphenat}
+% https://tex.stackexchange.com/a/134318
+% https://tex.stackexchange.com/a/249335
+% https://tex.stackexchange.com/a/134342
+% https://tex.stackexchange.com/a/291688
+%
+% TODO - experiment with the lengths until the effect works
+% \RaggedRightRightskip doesn't have the intended effect on lists, apparently:
+% \setlength\RaggedRightRightskip{\z@ plus 0.02\hsize} % from tufte
+% \setlength\RaggedRightRightskip{1pt plus 4em minus 1pt} % default is: 0pt plus 2em
+
 
 \setlist{topsep=0pt,itemsep=0pt,parsep=0.5\baselineskip}
 %% from https://github.com/jschaf/army-memos/blob/master/src/memorandum-for-record.tex
@@ -111,7 +151,9 @@
 \newsavebox{\am@rank}\newcommand{\rank}[1]{\sbox{\am@rank}{#1}}
 \newsavebox{\am@branch}\newcommand{\branch}[1]{\sbox{\am@branch}{#1}}
 \newsavebox{\am@title}\renewcommand{\title}[1]{\sbox{\am@title}{#1}}
+\newsavebox{\am@authorityline}\newcommand{\authority}[1]{\sbox{\am@authorityline}{\uppercase{#1}:}}
 %%%%%%%%%%%%%%
+
 
 \RequirePackage{scrlayer-scrpage}
 \setlength{\headheight}{2\baselineskip}
@@ -193,9 +235,4 @@
   \end{minipage}
 }
 
-\AtBeginDocument{%
-  \backgroundsetup{opacity=1, scale=1, angle=0, contents={\CLASSMARK}}\BgThispage%
-  \dodlogo%
-  \dodheader%
-  \vspace*{2\baselineskip}
-}
+
