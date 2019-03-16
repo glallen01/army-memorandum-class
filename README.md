@@ -67,7 +67,7 @@ Thanks for updates from @pconwell, @kjelderg, @nelsonrg, and others.
 
 
 -----------------------------------------------------------------------------
-Copyright (c) 2011 George L. Allen <glallen01@gmail.com> All rights reserved.
+Copyright (c) 2011 George Allen, All rights reserved.
 
 This program is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
