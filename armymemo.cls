@@ -51,7 +51,7 @@
 % https://tex.stackexchange.com/a/212214
 % BUG: something is messing with this, so for now moving it to the top 
 \AtEndDocument{%
-  \noindent\unhbox\am@authorityline\\
+  \noindent\am@authorityline\\
   \vspace*{4\baselineskip}
   \am@EnclAndDistro
   \signatureblock%
@@ -139,26 +139,39 @@
 \newcommand{\thh}{\textsuperscript{th}}
 
 %%%%%%%%%%%%%%
-\newsavebox{\am@address}\newcommand{\address}[1]{\sbox{\am@address}{#1}}
-\newsavebox{\am@city}\newcommand{\city}[1]{\sbox{\am@city}{#1}}
-\newsavebox{\am@signaturedate}\newcommand{\signaturedate}[1]{\sbox{\am@signaturedate}{#1}}
-\newsavebox{\am@suspensedate}\newcommand{\suspensedate}[1]{\sbox{\am@suspensedate}{#1}}
-\newsavebox{\am@officesymbol}\newcommand{\officesymbol}[1]{\sbox{\am@officesymbol}{#1}}
-\newsavebox{\am@memoline}\newcommand{\memoline}[1]{\sbox{\am@memoline}{#1}}
-\newsavebox{\am@subject}\renewcommand{\subject}[2][]{\sbox{\am@subject}{\uppercase{#1{}Subject}: #2}}
-\newsavebox{\am@documentmark}\newcommand{\documentmark}[1]{\sbox{\am@documentmark}{#1}}
-\newsavebox{\am@author}\renewcommand{\author}[1]{\sbox{\am@author}{#1}}
-\newsavebox{\am@rank}\newcommand{\rank}[1]{\sbox{\am@rank}{#1}}
-\newsavebox{\am@branch}\newcommand{\branch}[1]{\sbox{\am@branch}{#1}}
-\newsavebox{\am@title}\renewcommand{\title}[1]{\sbox{\am@title}{#1}}
-\newsavebox{\am@authorityline}\newcommand{\authority}[1]{\sbox{\am@authorityline}{\uppercase{#1}:}}
+\newcommand{\am@MissingRequiredArgError}[2]{%
+\textcolor{red}{#2}
+  \ClassError{army-memo}{%
+    #1{} is a required field\MessageBreak
+    press enter to continue}{}}
+\newcommand{\am@MissingRequiredArgWarning}[2]{%
+  \textcolor{red}{#2}%
+  \ClassWarningNoLine{army-memo}{%
+    #1{} is a required field\MessageBreak
+    press enter to continue}}
+\newcommand{\address}[1]{\def \am@address{#1}}\address{}
+\newcommand{\city}[1]{\def \am@city{#1}}\city{}
+\newcommand{\signaturedate}[1]{\def \am@signaturedate{#1}}\signaturedate{}
+\signaturedate{\am@MissingRequiredArgWarning{signaturedate}{DRAFT}}
+\newcommand{\suspensedate}[1]{\def \am@suspensedate{#1}}\suspensedate{}
+\newcommand{\officesymbol}[1]{\def \am@officesymbol{#1}}
+\officesymbol{\am@MissingRequiredArgError{officesymbol}{OFFICE SYMBOL}}
+\newcommand{\memoline}[1]{\def \am@memoline{#1}}\memoline{MEMORANDUM FOR RECORD}
+\renewcommand{\subject}[2][]{\def \am@subject{\uppercase{#1{}Subject}: #2}}
+\signaturedate{\am@MissingRequiredArgWarning{signaturedate}{DRAFT}}
+\newcommand{\documentmark}[1]{\def \am@documentmark{#1}}\documentmark{}
+\renewcommand{\author}[1]{\def \am@author{#1}}\author{}
+\newcommand{\rank}[1]{\def \am@rank{#1}}\rank{}
+\newcommand{\branch}[1]{\def \am@branch{#1}}\branch{}
+\renewcommand{\title}[1]{\def \am@title{#1}}\title{}
+\newcommand{\authority}[1]{\def \am@authorityline{\uppercase{#1}:}}\authority{}
 %%%%%%%%%%%%%%
 
 
 \RequirePackage{scrlayer-scrpage}
 \setlength{\headheight}{2\baselineskip}
 \clearpairofpagestyles%
-\lohead[]{\usebox{\am@officesymbol}\hspace*{\fill}\usebox{\am@signaturedate}\\\usebox{\am@subject}}
+\lohead[]{\am@officesymbol\hspace*{\fill}\am@signaturedate\\\am@subject}
 \cofoot[]{\thepage}
 \pagestyle{scrheadings}
 
@@ -190,18 +203,18 @@
       \letterhead{City, State 12345-1234}%
     };%%
   \end{tikzpicture}%%
-  \vspace{-6pt}%
-
-  \noindent\usebox{\am@officesymbol}\hspace*{\fill}\usebox{\am@signaturedate}\\[24pt]%
-  \noindent\unhbox\am@memoline\\[12pt]% https://tex.stackexchange.com/a/202899 (there may be an easier way, etoolbox?)
-  \noindent\usebox{\am@subject}\\[0 pt]%
+  %\vspace{-6pt}%
+  %
+  \noindent\am@officesymbol\hspace*{\fill}\am@signaturedate\\[24pt]%
+  \noindent\am@memoline\\[12pt]% https://tex.stackexchange.com/a/202899 (there may be an easier way, etoolbox?)
+  \noindent\am@subject\\[0 pt]%
 }
 
 \newcommand{\signatureblock}{%
   \begin{minipage}[t]{0.49\textwidth}
-    \usebox{\am@author}\\ 
-    \usebox{\am@rank}, \usebox{\am@branch}\\
-    \usebox{\am@title}
+    \am@author\\ 
+    \am@rank, \am@branch\\
+    \am@title
   \end{minipage}
 }
 
