@@ -63,7 +63,7 @@ latexmk -pdf -pvc -lualatex example.tex
 ```
 
 ## Thanks
-Thanks for updates from @pconwell, @kjelderg, @nelsonrg, and others.
+Thanks to @jschaf for enumitem and a better document template, also @pconwell, @kjelderg, @nelsonrg, and others.
 
 
 -----------------------------------------------------------------------------
