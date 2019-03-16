@@ -2,21 +2,68 @@
 
 Provides a basic AR 25-50 memo in latex.
 
-Requires XeLaTeX for font handling.
+## Setup
 
-Install Arial font in debian by running 
+* Requires LuaLaTeX or XeLaTeX for font handling.
+* Install Arial font ("preferred" by AR 25-50 1-17)
 
+Debian:
 ```bash
 sudo apt-get install ttf-mscorefonts-installer
 sudo fc-cache
 fc-match Arial
 ```
 
+Fedora:
 
+## Usage
 
-Thanks for updates from:
- Patrick Conwell (2014-)
- Eric Kjeldergaard (2015-)
+See `example.tex` and (TODO) template.tex.
+
+A minimum set of declarations are required for the office-symbol, subject,
+signature block, etc. After these options, within `\begin{document}` ...
+`\end{document}`, the structure is based on an `enumerate` list. This is a major
+break from the previous version, but much better for writing, as a good LaTeX
+editor will facilitate editing the nested list. Also, I intend to tie this into
+my emacs org-mode configuration eventually to further ease writing.
+
+The basic structure looks like:
+
+```latex
+\documentclass{armymemo}
+
+\author{John W. Smith}
+\rank{CPT}
+\branch{CY}
+\officesymbol{ABC-DEF-GH}
+\signaturedate{10 April 2019}
+\memoline{MEMORANDUM FOR RECORD}
+\subject[(U) ]{The creation of memos using \LaTeX}
+\authority{BY ORDER OF THE COMMANDER}
+
+\begin{document}
+
+\begin{enumerate}
+\item This memo is a demo.
+\item This item contains sub items.
+  \begin{enumerate}
+  \item Thing one.
+  \item Thing two.
+  \end{enumerate}
+\item Point of contact is the undersigned.
+\end{enumerate}
+
+\end{document}
+```
+
+## Compile
+
+```bash
+latexmk -pdf -pvc -lualatex example.tex
+```
+
+## Thanks
+Thanks for updates from @pconwell, @kjelderg, @nelsonrg, and others.
 
 
 -----------------------------------------------------------------------------
