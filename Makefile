@@ -26,7 +26,6 @@ clean:
 		*.lot \
 		*.orig \
 		*.out \
-		*.pdf \
 		*.rtf \
 		*.run.xml \
 		*.toc \
