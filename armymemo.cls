@@ -8,7 +8,6 @@
 \LoadClass[
   12pt,
   oneside,
-  parskip=half-,
   headings=small,
   DIV=15
 ]{scrartcl}
@@ -61,6 +60,16 @@
 \RequirePackage[dvipsnames]{xcolor}
 % for margins
 \RequirePackage[letterpaper,margin=1in,includehead]{geometry}
+\setlength{\parskip}{\baselineskip}
+% for headings
+\RequirePackage{scrlayer-scrpage}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{2\baselineskip}
+\setlength{\headsep}{2\baselineskip}
+\clearpairofpagestyles%
+\lohead[]{\am@officesymbol\hspace*{\fill}\am@signaturedate\\\am@subject}
+\cofoot[]{\thepage}
+\pagestyle{scrheadings}
 
 % used to change date format
 \RequirePackage{datetime}
@@ -115,7 +124,7 @@
 % \setlength\RaggedRightRightskip{1pt plus 4em minus 1pt} % default is: 0pt plus 2em
 
 
-\setlist{topsep=0pt,itemsep=0pt,parsep=0.5\baselineskip}
+\setlist{topsep=0pt,itemsep=0pt,parsep=\baselineskip,partopsep=0pt}
 %% from https://github.com/jschaf/army-memos/blob/master/src/memorandum-for-record.tex
 \renewcommand{\theenumi}{\arabic{enumi}}\renewcommand{\labelenumi}{\theenumi.}
 \renewcommand{\theenumii}{\alph{enumii}}\renewcommand{\labelenumii}{\theenumii.}
@@ -168,12 +177,6 @@
 %%%%%%%%%%%%%%
 
 
-\RequirePackage{scrlayer-scrpage}
-\setlength{\headheight}{2\baselineskip}
-\clearpairofpagestyles%
-\lohead[]{\am@officesymbol\hspace*{\fill}\am@signaturedate\\\am@subject}
-\cofoot[]{\thepage}
-\pagestyle{scrheadings}
 
 \newcommand{\CLASSMARK}{%
   \begin{tikzpicture}[remember picture, overlay]
@@ -194,6 +197,10 @@
 \newcommand{\daletterhead}[1]{\fontsize{10pt}{10pt}\selectfont\textbf{\uppercase{#1}}\\}
 \newcommand{\letterhead}[1]{\fontsize{8pt}{5pt}\selectfont\textbf{\uppercase{#1}}\\}
 
+% \dodheader alternate implementation possibility:
+%    https://www.ntg.nl/maps/31/15.pdf "Exact layout with LaTeX" Siep Kroonenberg
+%    uses plain tex and picture environment
+
 \newcommand{\dodheader}{%
   \thispagestyle{plain}%
   \begin{tikzpicture}[remember picture, overlay]%
@@ -205,11 +212,14 @@
       \letterhead{City, State 12345-1234}%
     };%%
   \end{tikzpicture}%%
-  %\vspace{-6pt}%
-  %
-  \noindent\am@officesymbol\hspace*{\fill}\am@signaturedate\\[24pt]%
-  \noindent\am@memoline\\[12pt]% https://tex.stackexchange.com/a/202899 (there may be an easier way, etoolbox?)
-  \noindent\am@subject\\[0 pt]%
+  % TODO if suspensedate
+  \par%there must be a \par here, or things break!
+  \vspace{-2\baselineskip}
+  \noindent\am@officesymbol\hspace*{\fill}\am@signaturedate\\
+  \vspace{2\baselineskip}
+  \noindent\am@memoline\\
+  \vspace{\baselineskip}
+  \noindent\am@subject\\
 }
 
 \newcommand{\signatureblock}{%
