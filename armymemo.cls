@@ -45,7 +45,6 @@
   \vspace*{2\baselineskip}
 }
 
-
 % \typeout{===========>}\show\@enddocumenthook
 % https://tex.stackexchange.com/a/212214
 % BUG: something is messing with this, so for now moving it to the top 
@@ -173,7 +172,8 @@
 \newcommand{\rank}[1]{\def \am@rank{#1}}\rank{}
 \newcommand{\branch}[1]{\def \am@branch{#1}}\branch{}
 \renewcommand{\title}[1]{\def \am@title{#1}}\title{}
-\newcommand{\authority}[1]{\def \am@authorityline{\uppercase{#1}:}}\authority{}
+\newcommand{\authority}[1]{\def\am@authorityline{\ifstrempty{#1}{}{\uppercase{#1}:}}}
+\authority{}
 %%%%%%%%%%%%%%
 
 
