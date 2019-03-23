@@ -39,7 +39,7 @@
 \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
 
 \AtBeginDocument{%
-  \backgroundsetup{opacity=1, scale=1, angle=0, contents={\CLASSMARK}}\BgThispage%
+  \backgroundsetup{opacity=1, scale=1, angle=0, contents={\CLASSMARK{UNCLASSIFIED//FOR OFFICIAL USE ONLY (EXAMPLE ONLY)}}}\BgThispage%
   \dodlogo%
   \dodheader%
   \vspace*{2\baselineskip}
@@ -178,10 +178,10 @@
 
 
 
-\newcommand{\CLASSMARK}{%
+\newcommand{\CLASSMARK}[1]{%
   \begin{tikzpicture}[remember picture, overlay]
-    \node[align=center,anchor=north,yshift=-24pt] at (current page.north) {UNCLASSIFIED//FOR OFFICIAL USE ONLY};
-    \node[align=center,anchor=south,yshift=36pt] at (current page.south) {UNCLASSIFIED//FOR OFFICIAL USE ONLY};
+    \node[align=center,anchor=north,yshift=-24pt] at (current page.north) {#1};
+    \node[align=center,anchor=south,yshift=36pt] at (current page.south) {#1};
   \end{tikzpicture}
 }
 

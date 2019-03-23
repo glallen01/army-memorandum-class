@@ -9,6 +9,7 @@ check: armymemo.cls
 
 clean:
 	-rm -f \
+		example*.pdf \
 		*-blx.bib \
 		*.aux \
 		*.bbl \
