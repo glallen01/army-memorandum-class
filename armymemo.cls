@@ -25,6 +25,8 @@
 \widowpenalty=10000
 \clubpenalty=10000
 
+% required for conditionals (already implied)
+\RequirePackage{etoolbox}
 % Setup fonts:
 \RequirePackage[utf8]{inputenc}
 % allow automatic quote expansion
@@ -39,7 +41,9 @@
 \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
 
 \AtBeginDocument{%
-  \backgroundsetup{opacity=1, scale=1, angle=0, contents={\CLASSMARK{UNCLASSIFIED//FOR OFFICIAL USE ONLY (EXAMPLE ONLY)}}}\BgThispage%
+  \ifstrempty{\am@documentmark}{}{%
+    \backgroundsetup{opacity=1, scale=1, angle=0,contents={\CLASSMARK{\am@documentmark}}}\BgThispage
+  }
   \dodlogo%
   \dodheader%
   \vspace*{2\baselineskip}
@@ -168,12 +172,14 @@
 \renewcommand{\subject}[2][]{\def \am@subject{\uppercase{#1{}Subject}: #2}}
 \signaturedate{\am@MissingRequiredArgWarning{signaturedate}{DRAFT}}
 \newcommand{\documentmark}[1]{\def \am@documentmark{#1}}\documentmark{}
+% authority line
+\newcommand{\authority}[1]{\def\am@authorityline{\ifstrempty{#1}{}{\uppercase{#1}:}}}
+\authority{}
+% signature block
 \renewcommand{\author}[1]{\def \am@author{#1}}\author{}
 \newcommand{\rank}[1]{\def \am@rank{#1}}\rank{}
 \newcommand{\branch}[1]{\def \am@branch{#1}}\branch{}
 \renewcommand{\title}[1]{\def \am@title{#1}}\title{}
-\newcommand{\authority}[1]{\def\am@authorityline{\ifstrempty{#1}{}{\uppercase{#1}:}}}
-\authority{}
 %%%%%%%%%%%%%%
 
 
