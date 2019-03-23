@@ -161,16 +161,18 @@
   \ClassWarningNoLine{army-memo}{%
     #1{} is a required field\MessageBreak
     press enter to continue}}
+% letterhead info
 \newcommand{\address}[1]{\def \am@address{#1}}\address{}
 \newcommand{\city}[1]{\def \am@city{#1}}\city{}
+% header info
 \newcommand{\signaturedate}[1]{\def \am@signaturedate{#1}}\signaturedate{}
 \signaturedate{\am@MissingRequiredArgWarning{signaturedate}{DRAFT}}
-\newcommand{\suspensedate}[1]{\def \am@suspensedate{#1}}\suspensedate{}
+\newcommand{\suspensedate}[1]{\def\am@suspensedate{\ifstrempty{#1}{}{S: #1}}}\suspensedate{}
 \newcommand{\officesymbol}[1]{\def \am@officesymbol{#1}}
 \officesymbol{\am@MissingRequiredArgError{officesymbol}{OFFICE SYMBOL}}
 \newcommand{\memoline}[1]{\def \am@memoline{#1}}\memoline{MEMORANDUM FOR RECORD}
 \renewcommand{\subject}[2][]{\def \am@subject{\uppercase{#1{}Subject}: #2}}
-\signaturedate{\am@MissingRequiredArgWarning{signaturedate}{DRAFT}}
+\subject{\am@MissingRequiredArgWarning{subject}{DRAFT}}
 \newcommand{\documentmark}[1]{\def \am@documentmark{#1}}\documentmark{}
 % authority line
 \newcommand{\authority}[1]{\def\am@authorityline{\ifstrempty{#1}{}{\uppercase{#1}:}}}
@@ -218,9 +220,13 @@
       \letterhead{City, State 12345-1234}%
     };%%
   \end{tikzpicture}%%
-  % TODO if suspensedate
   \par%there must be a \par here, or things break!
   \vspace{-2\baselineskip}
+  %conditional block for optional suspense date:
+  \ifstrempty{\am@suspensedate}{}{%
+    \vspace{-2\baselineskip}
+    \noindent\,\hspace*{\fill}\am@suspensedate\\
+    \vspace{\baselineskip}}
   \noindent\am@officesymbol\hspace*{\fill}\am@signaturedate\\
   \vspace{2\baselineskip}
   \noindent\am@memoline\\
