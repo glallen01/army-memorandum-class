@@ -42,7 +42,7 @@
 
 \AtBeginDocument{%
   \ifstrempty{\am@documentmark}{}{%
-    \backgroundsetup{opacity=1, scale=1, angle=0,contents={\CLASSMARK{\am@documentmark}}}\BgThispage
+    \backgroundsetup{opacity=1, scale=1, angle=0,contents={\am@classmark{\am@documentmark}}}\BgThispage
   }
   \dodlogo%
   \dodheader%
@@ -54,6 +54,7 @@
 % BUG: something is messing with this, so for now moving it to the top
 \AtEndDocument{%
   \setlength{\parskip}{0pt}
+  \vspace*{\baselineskip}
   \noindent\am@authorityline\\
   \vspace*{4\baselineskip}
   \begin{tikzpicture}[overlay]
@@ -200,22 +201,81 @@
   \ClassWarningNoLine{army-memo}{%
     #1{} is a required field\MessageBreak
     press enter to continue}}
+
 % letterhead info
 \newcommand{\address}[1]{\def \am@address{#1}}\address{}
 \newcommand{\city}[1]{\def \am@city{#1}}\city{}
+
 % header info
 \newcommand{\signaturedate}[1]{\def \am@signaturedate{#1}}\signaturedate{}
 \signaturedate{\am@MissingRequiredArgWarning{signaturedate}{DRAFT}}
 \newcommand{\suspensedate}[1]{\def\am@suspensedate{\ifstrempty{#1}{}{S: #1}}}\suspensedate{}
 \newcommand{\officesymbol}[1]{\def \am@officesymbol{#1}}
 \officesymbol{\am@MissingRequiredArgError{officesymbol}{OFFICE SYMBOL}}
-\newcommand{\memoline}[1]{\def \am@memoline{#1}}\memoline{MEMORANDUM FOR RECORD}
+
+
+%%%%% Memolines:-------------------------------------------------------
+%
+% example 1:
+% nothing or just \mfr -- MEMORANDUM FOR RECORD
+%
+% example 2:
+% \addmemoline{MEMORANDUM FOR ...} % this is hopefully what most people need most of the time
+%
+% example 3:
+% \addmemoline{MEMORANDUM THRU ...}
+% \addmemoline{FOR ...}
+% This is the first method for doing THRU memorandums. It follows the previous pattern.
+%
+% example 4:
+% \multimemothru{....}    % multi line memorandums break after MEMORANDUM THRU and have
+% \multimemothru{....}    % hanging indents after each THRU line, without spaces, followed by
+% \addmemoline{FOR ...}   % a space and the FOR line. FOR must be specified in the \addmemoline
+%
+% This method deviates from examples 1-3, as it uses \multimemothru{...} to add multiple thru lines
+% with hanging indents per the AR, followed by an \addmemoline{} to complete the "FOR ..."
+%
+\newcounter{am@memoline@count}
+\newcommand{\addmemoline}[1]{\stepcounter{am@memoline@count}\listadd{\am@list@memolines}{#1}}
+\newcommand{\mfr}{\addmemoline{MEMORANDUM FOR RECORD}}
+\newcommand{\memoline}[1]{\addmemoline{#1}}
+\newcommand{\am@domemoline}[1]{\vspace{\baselineskip}\noindent{}#1\\}
+\newcounter{am@memothru@count}
+\newcommand{\multimemothru}[1]{\stepcounter{am@memothru@count}\listadd{\am@list@memothru}{#1}}
+\newcommand{\am@do@memothru}[1]{\noindent{}\hangindent=0.25in{}#1\\}
+\newcommand{\am@memoline}{%
+  % if there is nothing specified, add "memorandum for record"
+  \ifnumcomp{\value{am@memoline@count}}{=}{0}{%
+    \ifnumcomp{\value{am@memothru@count}}{=}{0}{\mfr}{}}{}
+  % otherwise, skip a space and begin
+  \vspace{\baselineskip}
+  % if there are multimemothru lines:
+  \ifnumcomp{\value{am@memothru@count}}{>}{0}{%
+    \vspace{\baselineskip}
+    MEMORANDUM THRU\\
+    \vspace{\baselineskip}
+    % loop through the thru lines with hanging indent
+    \forlistloop{\am@do@memothru}{\am@list@memothru}}
+  {}
+  % after dealing with special cases, add the other lines from \addmemoline or \memoline
+  % these lines must begin with any labels such as "MEMORANDUM FOR" or "MEMORANDUM THRU" or "FOR"
+  \forlistloop{\am@domemoline}{\am@list@memolines}
+}
+
+
+%%%%% ----------------------------------------------------------------
+
 \renewcommand{\subject}[2][]{\def \am@subject{\uppercase{#1{}Subject}: #2}}
 \subject{\am@MissingRequiredArgWarning{subject}{DRAFT}}
+
+% top and bottom of page classification markings
+% TODO should be highest of any portion marking (how to track/test)?
 \newcommand{\documentmark}[1]{\def \am@documentmark{#1}}\documentmark{}
+
 % authority line
 \newcommand{\authority}[1]{\def\am@authorityline{\ifstrempty{#1}{}{\uppercase{#1}:}}}
 \authority{}
+
 % signature block
 \renewcommand{\author}[1]{\def \am@author{#1}}\author{}
 \newcommand{\rank}[1]{\def \am@rank{#1}}\rank{}
@@ -223,9 +283,8 @@
 \renewcommand{\title}[1]{\def \am@title{#1}}\title{}
 
 
-% used to unroll etoolbox lists
+% add enclosures along with a total count
 \newcommand{\am@do@encl}[1]{\item #1 }
-
 \newcounter{am@encl@count}
 \newcommand{\addencl}[1]{\stepcounter{am@encl@count}\listadd{\am@list@encls}{#1}}
 \newcommand{\am@encls}{%
@@ -247,8 +306,8 @@
   }
 }
 
+% add distribution, with an option for continuation on the next page
 \newcommand{\am@do}[1]{#1\\}
-
 \newcounter{am@distro@count}
 \newcommand{\adddistro}[1]{\stepcounter{am@distro@count}\listadd{\am@list@distro}{#1}}
 \newcommand{\am@distro}{%
@@ -260,6 +319,7 @@
 \newcommand{\continuedistro}{\adddistro{(CONTINUED)\clearpage
     DISTRIBUTION:}}
 
+% add cf, with an option for continuation on the next page
 \newcounter{am@cf@count}
 \newcommand{\addcf}[1]{\stepcounter{am@cf@count}\listadd{\am@list@cf}{#1}}
 \newcommand{\am@cf}{%
@@ -271,13 +331,9 @@
 \newcommand{\continuecf}{\addcf{(CONTINUED)\clearpage
     CF:}}
 
-%%%%%%%%%%%%%%
 
 
-
-
-
-\newcommand{\CLASSMARK}[1]{%
+\newcommand{\am@classmark}[1]{%
   \begin{tikzpicture}[remember picture, overlay]
     \node[align=center,anchor=north,yshift=-24pt] at (current page.north) {#1};
     \node[align=center,anchor=south,yshift=36pt] at (current page.south) {#1};
@@ -319,8 +375,7 @@
     \noindent\,\hspace*{\fill}\am@suspensedate\\
     \vspace{\baselineskip}}
   \noindent\am@officesymbol\hspace*{\fill}\am@signaturedate\\
-  \vspace{2\baselineskip}
-  \noindent\am@memoline\\
+  \am@memoline
   \vspace{\baselineskip}
   \noindent\am@subject\\
 }
