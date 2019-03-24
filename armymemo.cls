@@ -51,12 +51,43 @@
 
 % \typeout{===========>}\show\@enddocumenthook
 % https://tex.stackexchange.com/a/212214
-% BUG: something is messing with this, so for now moving it to the top 
+% BUG: something is messing with this, so for now moving it to the top
 \AtEndDocument{%
+  \setlength{\parskip}{0pt}
   \noindent\am@authorityline\\
   \vspace*{4\baselineskip}
-  \am@EnclAndDistro
-  \signatureblock%
+  \begin{tikzpicture}[overlay]
+    %% to draw a grid for debugging
+    % \draw[style=help lines] (0,0) grid (15,5);
+    \node [align=left, anchor=west, inner sep=0, outer sep=0] at (0.5\textwidth,-10pt){% TODO BUG - why a 10pt offset? I don't know.
+      \am@author\\ 
+      \am@rank, \am@branch\\
+      \am@title
+    };
+  \end{tikzpicture}%
+  \am@encls%
+  \am@distro%
+  \am@cf%
+%
+%   % since minipages can't break, and this may happen near the bottom of a page,
+%   % only encls and signature block go in the first mini-page
+%   \begin{minipage}[t]{0.49\textwidth}
+%     \am@encls
+%   \end{minipage}
+%   % signatureblock
+% %  % \begin{minipage}[t]{0.49\textwidth}
+%   %   % consider changing this to an \addtosig{}
+%   %   % \am@author\\ 
+%   %   % \am@rank, \am@branch\\
+%   %   % \am@title
+% %  % \end{minipage}
+%   % \filbreak % if a break must happen, do it here, rather than orphaning the signature
+%   % spacing issues w/ minipage: https://tex.stackexchange.com/q/349178/6648
+%   % TODO: figure out continuations of Distro and CF across pagebreaks
+%   \begin{minipage}[t]{0.49\textwidth}\am@distro\end{minipage}%
+%   \begin{minipage}[t]{0.49\textwidth}\ \end{minipage}
+%   \begin{minipage}[t]{0.49\textwidth}\am@cf\end{minipage}%
+%   \begin{minipage}[t]{0.49\textwidth}\ \end{minipage}
 }
 
 % for future use of colors in classification markings
@@ -133,7 +164,14 @@
 \renewcommand{\theenumii}{\alph{enumii}}\renewcommand{\labelenumii}{\theenumii.}
 \renewcommand{\theenumiii}{\arabic{enumiii}}\renewcommand{\labelenumiii}{(\theenumiii)}
 \renewcommand{\theenumiv}{\alph{enumiv}}\renewcommand{\labelenumiv}{(\theenumiv)}
-\setlist[1]{labelwidth=12pt,labelsep=4pt,leftmargin=0pt,itemindent=16pt,align=left}
+% these \setlist provide the layout for each indentation level
+% the after={} on level[1] prevents orphaned signature-blocks without the preceding final paragraph.
+\RequirePackage{needspace}
+\setlist[1]{labelwidth=12pt,labelsep=4pt,leftmargin=0pt,itemindent=16pt,align=left,
+  after={
+    \nopagebreak\@nobreaktrue
+  }
+}
 \setlist[2]{labelwidth=12pt,labelsep=4pt,leftmargin=0pt,itemindent=0.5in,align=left}
 \setlist[3]{labelwidth=12pt,labelsep=4pt,leftmargin=0pt,itemindent=0.75in,align=left}
 \setlist[4]{labelwidth=12pt,labelsep=4pt,leftmargin=0pt,itemindent=0.75in,align=left}
@@ -182,7 +220,59 @@
 \newcommand{\rank}[1]{\def \am@rank{#1}}\rank{}
 \newcommand{\branch}[1]{\def \am@branch{#1}}\branch{}
 \renewcommand{\title}[1]{\def \am@title{#1}}\title{}
+
+
+% used to unroll etoolbox lists
+\newcommand{\am@do@encl}[1]{\item #1 }
+
+\newcounter{am@encl@count}
+\newcommand{\addencl}[1]{\stepcounter{am@encl@count}\listadd{\am@list@encls}{#1}}
+\newcommand{\am@encls}{%
+  \ifnumcomp{\value{am@encl@count}}{=}{0}{%
+    \noindent{}Encl\\[2\baselineskip]%
+  }{%
+    \ifnumcomp{\value{am@encl@count}}{=}{1}{%
+      \noindent{}Encl%
+      \begin{enumerate}[topsep=0pt,itemsep=0pt,parsep=0pt,itemindent=0pt,align=left,label={}]
+        \forlistloop{\am@do@encl}{\am@list@encls}
+      \end{enumerate}
+      \vspace{\baselineskip}
+    }{}%
+    \ifnumcomp{\value{am@encl@count}}{>}{2}{%
+      \noindent\theam@encl@count{} Encls%
+      \begin{enumerate}[topsep=0pt,itemsep=0pt,parsep=0pt,leftmargin=16pt,itemindent=0pt,align=left,label={\arabic*.}]
+        \forlistloop{\am@do@encl}{\am@list@encls}
+      \end{enumerate}}{}
+  }
+}
+
+\newcommand{\am@do}[1]{#1\\}
+
+\newcounter{am@distro@count}
+\newcommand{\adddistro}[1]{\stepcounter{am@distro@count}\listadd{\am@list@distro}{#1}}
+\newcommand{\am@distro}{%
+  \ifnumcomp{\value{am@distro@count}}{>}{0}{%
+    \vspace{\baselineskip}%
+    \noindent{}DISTRIBUTION:\\%
+    \forlistloop{\am@do}{\am@list@distro}}{}}
+% insert \continuedistro at the beginning of an \adddistro list in order to push it to the next page
+\newcommand{\continuedistro}{\adddistro{(CONTINUED)\clearpage
+    DISTRIBUTION:}}
+
+\newcounter{am@cf@count}
+\newcommand{\addcf}[1]{\stepcounter{am@cf@count}\listadd{\am@list@cf}{#1}}
+\newcommand{\am@cf}{%
+  \ifnumcomp{\value{am@cf@count}}{>}{0}{%
+    \vspace{\baselineskip}%
+    \noindent{}CF:\\
+    \forlistloop{\am@do}{\am@list@cf}}{}}
+% insert \continuecf at the beginning of an \addcf list in order to push it to the next page
+\newcommand{\continuecf}{\addcf{(CONTINUED)\clearpage
+    CF:}}
+
 %%%%%%%%%%%%%%
+
+
 
 
 
@@ -233,43 +323,4 @@
   \vspace{\baselineskip}
   \noindent\am@subject\\
 }
-
-\newcommand{\signatureblock}{%
-  \begin{minipage}[t]{0.49\textwidth}
-    \am@author\\ 
-    \am@rank, \am@branch\\
-    \am@title
-  \end{minipage}
-}
-
-\newcommand{\am@encls}{%
-  1 Encls
-  \begin{enumerate}[topsep=0pt,itemsep=0pt,parsep=0pt,leftmargin=16pt,itemindent=0pt,align=left,label={\arabic*.}]
-  \item AR 25--50
-  \end{enumerate}
-  
-}
-
-\newcommand{\am@distro}{%
-  DISTRIBUTION:\\%
-  CDR\\
-  S3\\
-}
-
-\newcommand{\am@cf}{%
-  CF:\\
-  CFline1\\
-  CFline2
-}
-
-\newcommand{\am@EnclAndDistro}{%
-  \begin{minipage}[t]{0.49\textwidth}
-    \am@encls
-    \ \newline
-    \am@distro
-    \ \newline
-    \am@cf
-  \end{minipage}
-}
-
 
