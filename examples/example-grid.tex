@@ -18,10 +18,17 @@
   }%
 }
 
-\author{John Doe}\rank{CPT}\branch{CY}
-\officesymbol{ABC-DEF-GH}
+\logo{imperialseal-536x536}
+\department{Galactic Fleet}
+\address{Death Star}
+\address{Alderaan System}
+\address{Core Worlds}
+\officesymbol{DS-1-OBS}
 \signaturedate{10 April 2019}
-\documentmark{UNCLASSIFIED//FOR OFFICIAL USE ONLY (EXAMPLE ONLY)}
+\documentmark{GALACTIC CONFIDENTIAL//DEATHSTAR}
+
+% If the subject spills into a 2nd line, it breaks \pagedesign from layout, but otherwise seems to work
+\subject{On the use and testing of \LaTeX\ for document production}% and system documentation for the DS-1 Orbital Battle Station}
 
 % \mfr
 
@@ -35,21 +42,24 @@
 % \addmemoline{MEMORANDUM FOR U.S. Army Command and General Staff College (ATZL), 100 Stimson Avenue, Ft Leavenworth, KS 66027-1352}
 
 \authority{FOR THE COMMANDER}
-\subject{Using and Preparing a Memorandum with \LaTeX}
+\author{Boba Fett}
+\rank{Contractor}
+\branch{Independent}
+\title{Procurement of Prized Heads}
+
 \suspensedate{1 JAN 2019}
 \authority{AUTHORITY LINE}
-\title{COMMANDING}
-\addencl{AR 25-50}
-\addencl{Resume}
-\addencl{Things}
+
+\addencl{\LaTeX HOWTO}
+\addencl{StackExchange}
+\addencl{armymemo.cls}
 \continuedistro
-\adddistro{DISTRO 1}
-\adddistro{DISTRO 2}
-\adddistro{DISTRO 3}
-\adddistro{DISTRO 4}
-\addcf{CF 1}
-\addcf{CF 2}
-\addcf{CF 3}
+\adddistro{G.M. Tarkin}
+\adddistro{Adm. Ozzel}
+\adddistro{Adm. Motti}
+\adddistro{V.Adm. Piett}
+\addcf{Galactic J3}
+\addcf{Fleet J3}
 
 \begin{document}
 \begin{enumerate}
@@ -60,14 +70,22 @@
 \item This document uses code from \url{https://tex.stackexchange.com/q/159010}
   to display the baselines in order to confirm spacing between paragraph, list
   items, and other elements of the memo.
+\item This \verb!example-grid.tex! document is for testing features of the class
+  and validating layout.
 \item See paragraph 2-2 (of AR 25-50) for when to use a memorandum.
-\item Single space the text and double space between paragraphs and subparagraphs. Insert two blank spaces after ending punctuation (period and question mark). Insert two blank spaces after a colon. When numbering subparagraphs, insert two blank spaces after parentheses.
-\item When a memorandum has more than one paragraph, number the paragraphs consecutively. When paragraphs are subdivided, designate first subdivisions using lowercase letters of the alphabet and indent 1/4 inch as shown below.
+\item Single space the text and double space between paragraphs and
+  subparagraphs. Insert two blank spaces after ending punctuation (period and
+  question mark). Insert two blank spaces after a colon. When numbering
+  subparagraphs, insert two blank spaces after parentheses.
+\item When a memorandum has more than one paragraph, number the paragraphs
+  consecutively. When paragraphs are subdivided, designate first subdivisions
+  using lowercase letters of the alphabet and indent 1/4 inch as shown below.
   \begin{enumerate}
   \item When a paragraph is subdivided, it must have at least two subparagraphs.
   \item If there is a subparagraph ``a,'' there must be a subparagraph ``b.''
     \begin{enumerate}
-    \item Designate second subdivisions by numbers in parentheses; for example (1), (2), and (3) and indent by 1/2 inch as shown.
+    \item Designate second subdivisions by numbers in parentheses; for example
+      (1), (2), and (3) and indent by 1/2 inch as shown.
     \item Do not subdivide beyond the third subdivision.
       \begin{enumerate}
       \item Do not indent any further than the second subdivision.
@@ -77,22 +95,24 @@
   \end{enumerate}
 \item Moby Dick, a classic American Novel, the text of which is public domain,
   follows in several paragraphs to make a longer example:
-
   \begin{enumerate}
-  \item Call me Ishmael. Some years ago- never mind how long precisely- having little or
-    no money in my purse, and nothing particular to interest me on shore, I thought
-    I would sail about a little and see the watery part of the world. It is a way I
-    have of driving off the spleen and regulating the circulation. Whenever I find
-    myself growing grim about the mouth; whenever it is a damp, drizzly November in
-    my soul; whenever I find myself involuntarily pausing before coffin warehouses,
-    and bringing up the rear of every funeral I meet; and especially whenever my
-    hypos get such an upper hand of me, that it requires a strong moral principle to
-    prevent me from deliberately stepping into the street, and methodically knocking
-    people's hats off- then, I account it high time to get to sea as soon as I can.
-    This is my substitute for pistol and ball. With a philosophical flourish Cato
+  \item Call me Ishmael.\footnote{This is a footnote} Some years ago- never mind
+    how long precisely- having little or no money in my purse\footnote{wallet},
+    and nothing particular to interest me on shore, I thought I would sail about
+    a little and see the watery part of the world.\footnote{aka the ocean} It is
+    a way I have of driving off the spleen and regulating the
+    circulation. Whenever I find myself growing grim about the mouth; whenever
+    it is a damp, drizzly November in my soul; whenever I find myself
+    involuntarily pausing before coffin warehouses, and bringing up the rear of
+    every funeral I meet; and especially whenever my hypos get such an upper
+    hand of me, that it requires a strong moral principle to prevent me from
+    deliberately stepping into the street, and methodically knocking people's
+    hats off- then, I account it high time to get to sea as soon as I can.  This
+    is my substitute for pistol and ball. With a philosophical flourish Cato
     throws himself upon his sword; I quietly take to the ship. There is nothing
-    surprising in this. If they but knew it, almost all men in their degree, some
-    time or other, cherish very nearly the same feelings towards the ocean with me.
+    surprising in this. If they but knew it, almost all men in their degree,
+    some time or other, cherish very nearly the same feelings towards the ocean
+    with me.
 
   \item There now is your insular city of the Manhattoes, belted round by wharves as
     Indian isles by coral reefs- commerce surrounds it with her surf. Right and
@@ -267,10 +287,11 @@
 \begin{figure}
   \centering
   \currentpage
+  \drawmarginparsfalse
+  \drawdimensionstrue
   \pagedesign
   \caption{Document layout}
   \label{fig:1}
 \end{figure}
 
 \end{document}
-
