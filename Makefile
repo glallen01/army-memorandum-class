@@ -1,34 +1,16 @@
-pdf: example.pdf
+SRC=$(wildcard *.tex)
 
-example.pdf: example.tex example-long.tex armymemo.cls
-	latexmk -pdf -lualatex example.tex
-	latexmk -pdf -lualatex example-long.tex
+.PHONY: check clean proper
+
+all:
+	cd examples && $(MAKE) all
 
 check: armymemo.cls
 	chktex armymemo.cls
 
 clean:
-	-rm -f \
-		example*.pdf \
-		*-blx.bib \
-		*.aux \
-		*.bbl \
-		*.bcf \
-		*.blg \
-		*.brf \
-		*.dvi \
-		*.ent \
-		*.fdb_latexmk \
-		*.idx \
-		*.ilg \
-		*.ind \
-		*.lof \
-		*.log \
-		*.lot \
-		*.orig \
-		*.out \
-		*.rtf \
-		*.run.xml \
-		*.toc \
-		*.url 
+	cd examples && $(MAKE) clean
+
+proper: clean
+	cd examples && $(MAKE) proper
 
