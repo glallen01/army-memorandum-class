@@ -94,14 +94,30 @@
 % for future use of colors in classification markings
 \RequirePackage[dvipsnames]{xcolor}
 % for margins
-\RequirePackage[letterpaper,margin=1in,includehead]{geometry}
+\RequirePackage{calc}
+\RequirePackage[letterpaper
+  ,margin=1in
+  % in order to get 2-line offset between bottom of text and page number
+  % (because it looks nicer)
+  ,bottom=1in-2\baselineskip
+  ,includehead
+  % includefoot, but then we manually adjust the bottom margin above, in order
+  % to also adjust the overall \textheight
+  % also the AR examples show the page number above the classification marking
+  ,includefoot
+  ,footskip=3\baselineskip
+  ,footnotesep=\baselineskip
+  % assume two lines for headers
+  % TODO: test with longer subject lines, assuming it will break
+  ,headheight=2\baselineskip
+  ,headsep=2\baselineskip
+  ]{geometry}
+% make sure the paragraph spacing matches the linespacing
 \setlength{\parskip}{\baselineskip}
-% for headings
+
+% setup page headers
 \RequirePackage{scrlayer-scrpage}
-\setlength{\topmargin}{0pt}
-\setlength{\headheight}{2\baselineskip}
 \setlength{\footheight}{2\baselineskip}
-\setlength{\headsep}{2\baselineskip}
 \clearpairofpagestyles%
 \lohead[]{\am@officesymbol\hspace*{\fill}\am@signaturedate\\\am@subject}
 \cofoot[]{\thepage}
