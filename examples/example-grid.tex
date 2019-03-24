@@ -1,5 +1,6 @@
 \documentclass{armymemo}
-
+% used to show page layouts
+\usepackage{layouts}
 % In order to show baselines:
 % https://tex.stackexchange.com/q/159010
 \usepackage{atbegshi,picture,xcolor,hyperref}
@@ -38,7 +39,6 @@
 \addcf{CF 2}
 \addcf{CF 3}
 
-\usepackage{layouts}
 \begin{document}
 \begin{enumerate}
 % \item \currentlist
@@ -251,7 +251,14 @@
 \item POC for this memo is John Doe, who can be reached at \texttt{john@dev.null}
   or (555) 555-1234.
 \end{enumerate}
-% \drawpage
+
+\begin{figure}
+  \centering
+  \currentpage
+  \pagedesign
+  \caption{Document layout}
+  \label{fig:1}
+\end{figure}
 
 \end{document}
 

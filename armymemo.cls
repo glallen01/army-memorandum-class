@@ -99,6 +99,7 @@
 \RequirePackage{scrlayer-scrpage}
 \setlength{\topmargin}{0pt}
 \setlength{\headheight}{2\baselineskip}
+\setlength{\footheight}{2\baselineskip}
 \setlength{\headsep}{2\baselineskip}
 \clearpairofpagestyles%
 \lohead[]{\am@officesymbol\hspace*{\fill}\am@signaturedate\\\am@subject}
