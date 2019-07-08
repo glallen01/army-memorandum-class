@@ -135,9 +135,10 @@
 \RequirePackage{scrlayer-scrpage}
 \setlength{\footheight}{2\baselineskip}
 \clearpairofpagestyles%
-\lohead[]{\am@officesymbol\hspace*{\fill}\am@signaturedate\\\am@subject}
+\lohead[]{\am@officesymbol\hspace*{\fill}\\\am@subject}
 \cofoot[]{\thepage}
 \pagestyle{scrheadings}
+\setkomafont{pagehead}{\sffamily\upshape}
 
 
 % process class options
@@ -306,7 +307,6 @@
 \newcommand{\addencl}[1]{\stepcounter{am@encl@count}\listadd{\am@list@encls}{#1}}
 \newcommand{\am@encls}{%
   \ifnumcomp{\value{am@encl@count}}{=}{0}{%
-    \noindent{}Encl\\[2\baselineskip]%
   }{%
     \ifnumcomp{\value{am@encl@count}}{=}{1}{%
       \noindent{}Encl%
@@ -361,8 +361,6 @@
   \begin{tikzpicture}[remember picture, overlay]%
     \node[anchor=north west,inner sep=0pt,xshift=0.5in, yshift=-0.5in]%
       at (current page.north west) {\includegraphics[width=1in]{\am@logo}};%
-    \node[anchor=north west,inner sep=0pt,xshift=1.5in, yshift=-1.25in,text width=1in]%
-	  at (current page.north west) {\scriptsize{REPLY TO\\\vspace{-6pt}ATTENTION OF:}};
   \end{tikzpicture}%
 }
 
