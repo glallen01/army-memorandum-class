@@ -1,18 +1,14 @@
-SRC := $(wildcard *.tex)
-
+SRC=$(wildcard *.tex)
 MAKEFLAGS=-j
-#MAKEFLAGS=-j
 
-.PHONY: clean proper check
+.PHONY: clean proper check force
 
-pdf: $(SRC:.tex=.pdf)
-
-all: pdf ../armymemo.cls
+all: $(SRC:.tex=.pdf) force ../armymemo.cls
 
 %.pdf: %.tex
 	../latexrun --latex-cmd lualatex -W no-overfull --color always "$<"
 
-#	latexmk -pdf -lualatex $<
+# https://github.com/aclements/latexrun
 
 # convert -thumbnail x400 -background white -alpha remove -density 300 example.pdf example.png
 # convert -thumbnail x400 -background white -alpha remove -density 150 example.pdf example.png

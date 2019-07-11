@@ -1,8 +1,8 @@
-SRC=$(wildcard *.tex)
+SRC=$(wildcard examples/*.tex)
 
 .PHONY: check clean proper
 
-all:
+all: armymemo.cls $(SRC)
 	cd examples && $(MAKE) all
 
 check: armymemo.cls
