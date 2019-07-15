@@ -32,14 +32,18 @@ The basic structure looks like:
 ```latex
 \documentclass{armymemo}
 
-\author{John W. Smith}
-\rank{CPT}
-\branch{CY}
+\address{Organizational Name/Title}
+\address{Standardized Street Address}
+\address{CITY, STATE, 12345-1234}
+
+\author{John W. Smith}\rank{CPT}\branch{CY}\title{S-3}            % optional
 \officesymbol{ABC-DEF-GH}
+\suspensedate{12 April 2019}                                      % optional
 \signaturedate{10 April 2019}
 \memoline{MEMORANDUM FOR RECORD}
+\documentmark{UNCLASSIFIED//FOR OFFICIAL USE ONLY (EXAMPLE ONLY)} % optional
 \subject[(U) ]{The creation of memos using \LaTeX}
-\authority{BY ORDER OF THE COMMANDER}
+\authority{BY ORDER OF THE COMMANDER}                             % optional
 
 \begin{document}
 
