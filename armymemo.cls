@@ -91,6 +91,8 @@
 
 % used to change date format
 \RequirePackage{datetime}
+\newdateformat{mildate}{\twodigit\THEDAY\ \monthname[\THEMONTH] \THEYEAR}
+\mildate
 % for logo and other includes
 \RequirePackage{graphicx}
 % for future use of colors in classification markings
