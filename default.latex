@@ -1,0 +1,19 @@
+\providecommand{\tightlist}{%
+	  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\documentclass{armymemo}
+
+\address{$address1$}
+\address{$address2$}
+\address{$address3$}
+
+\author{$author$}\rank{$rank$}\branch{$branch$}$if(title)$\title{$title$}$endif$
+\officesymbol{$officesymbol$}
+$if(suspensedate)$\suspensedate{$suspensedate$}$endif$
+\signaturedate{$if(signaturedate)$$signaturedate$$else$\today$endif$}
+\memoline{$if(memoline)$$memoline$$else$MEMORANDUM FOR RECORD$endif$}
+\subject{$subject$}
+
+\begin{document}
+$body$
+\end{document}
