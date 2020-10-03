@@ -1,16 +1,9 @@
-SRC=$(wildcard examples/*.tex)
+MD=$(wildcard *.md)
+TEX=$(wildcard *.tex)
 
-.PHONY: check clean proper
-
-all: armymemo.cls $(SRC)
-	cd examples && $(MAKE) all
-
-check: armymemo.cls
-	chktex armymemo.cls
+main:
+	pandoc -o out.pdf --pdf-engine=xelatex --template=default.latex main.md
 
 clean:
-	cd examples && $(MAKE) clean
-
-proper: clean
-	cd examples && $(MAKE) proper
+	rm *.pdf
 
