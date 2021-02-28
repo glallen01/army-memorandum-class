@@ -34,7 +34,7 @@
     %% to draw a grid for debugging
     % \draw[style=help lines] (0,0) grid (15,5);
     \node [align=left, anchor=west, inner sep=0, outer sep=0] at (0.5\textwidth,-10pt){% TODO BUG - why a 10pt offset? I don't know.
-      \am@author\\ 
+      {\MakeUppercase \am@author}\\ 
       \am@rank, \am@branch\\
       \am@title
     };
@@ -91,6 +91,8 @@
 
 % used to change date format
 \RequirePackage{datetime}
+\newdateformat{mildate}{\twodigit\THEDAY\ \monthname[\THEMONTH] \THEYEAR}
+\mildate
 % for logo and other includes
 \RequirePackage{graphicx}
 % for future use of colors in classification markings
