@@ -291,6 +291,7 @@
 % top and bottom of page classification markings
 % TODO should be highest of any portion marking (how to track/test)?
 \newcommand{\documentmark}[1]{\def \am@documentmark{#1}}\documentmark{}
+\newcommand{\PM}[1][U]{ {(#1)} }  % call with your portion mark, else defaults to (U)
 
 % authority line
 \newcommand{\authority}[1]{\def\am@authorityline{\ifstrempty{#1}{}{\uppercase{#1}:}}}
