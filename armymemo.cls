@@ -29,11 +29,12 @@
   \setlength{\parskip}{0pt}
   \vspace*{\baselineskip}
   \noindent\am@authorityline\\
-  \vspace*{4\baselineskip}
+  \vspace*{2\baselineskip}
   \begin{tikzpicture}[overlay]
     %% to draw a grid for debugging
     % \draw[style=help lines] (0,0) grid (15,5);
     \node [align=left, anchor=west, inner sep=0, outer sep=0] at (0.5\textwidth,-10pt){% TODO BUG - why a 10pt offset? I don't know.
+      \begin{Form}\digsigfield{3in}{2\baselineskip}{signature}\end{Form}\\
       {\MakeUppercase \am@author}\\ 
       \am@rank, \am@branch\\
       \am@title
@@ -77,14 +78,15 @@
 % required for conditionals (already implied)
 \RequirePackage{etoolbox}
 % Setup fonts:
-\RequirePackage[utf8]{inputenc}
+
 % allow automatic quote expansion
 \RequirePackage{csquotes}
 \MakeOuterQuote{"}
 % for font selection
 \RequirePackage{fontspec}
 \RequirePackage[english]{babel}
-% AR 25-50 recommends Arial as of 17 May 2013.  1-17b
+
+
 \setmainfont{Arial}
 \setsansfont{Arial}
 \defaultfontfeatures{Mapping=tex-text} % To support LaTeX ``" quotes.
@@ -166,6 +168,7 @@
 
 % do I need this later? https://tex.stackexchange.com/a/64615
 \usepackage[colorlinks=true,urlcolor=blue,citecolor=blue,breaklinks=true]{hyperref}
+\RequirePackage{digsig}
 \urlstyle{same}
 
 \RequirePackage{ragged2e}
