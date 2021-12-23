@@ -12,6 +12,8 @@
   DIV=15
 ]{scrartcl}
 
+% ensure no extra space after periods, AR 25-50, 1-39.a
+\frenchspacing
 
 \AtBeginDocument{%
   \ifstrempty{\am@documentmark}{}{%
@@ -228,7 +230,7 @@
 % header info
 \newcommand{\signaturedate}[1]{\def \am@signaturedate{#1}}\signaturedate{}
 \signaturedate{\am@MissingRequiredArgWarning{signaturedate}{DRAFT}}
-\newcommand{\suspensedate}[1]{\def\am@suspensedate{\ifstrempty{#1}{}{S: #1}}}\suspensedate{}
+\newcommand{\suspensedate}[1]{\def\am@suspensedate{\ifstrempty{#1}{}{\textbf{S: #1}}}}\suspensedate{}
 \newcommand{\officesymbol}[1]{\def \am@officesymbol{#1}}
 \officesymbol{\am@MissingRequiredArgError{officesymbol}{OFFICE SYMBOL}}
 % allow replacing the logo

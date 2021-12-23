@@ -6,7 +6,7 @@ MAKEFLAGS=-j
 all: $(SRC:.tex=.pdf) force ../armymemo.cls
 
 %.pdf: %.tex
-	../latexrun --latex-cmd lualatex -W no-overfull --color always "$<"
+	if [ -x ../latexrun ]; then ../latexrun --latex-cmd lualatex -W no-overfull --color always "$<"; else latexmk -lualatex "$<"; fi
 
 # https://github.com/aclements/latexrun
 
