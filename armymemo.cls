@@ -12,6 +12,8 @@
   DIV=15
 ]{scrartcl}
 
+% ensure no extra space after periods, AR 25-50, 1-39.a
+\frenchspacing
 
 \AtBeginDocument{%
   \ifstrempty{\am@documentmark}{}{%
