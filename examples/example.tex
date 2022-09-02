@@ -1,5 +1,6 @@
 % Created 2019-02-24 Sun 16:11
 % Intended LaTeX compiler: pdflatex
+% arara: latexmk: { options: ["-lualatex"] }
 \documentclass{../armymemo}
 
 \address{Organizational Name/Title}
@@ -34,7 +35,7 @@
 \item When a memorandum has more than one paragraph, number the paragraphs consecutively. When paragraphs are subdivided, designate first subdivisions using lowercase letters of the alphabet and indent 1/4 inch as shown below.
   \begin{enumerate}
   \item When a paragraph is subdivided, it must have at least two subparagraphs.
-  \item If there is a subparagraph ``a,'' there must be a subparagraph ``b.''
+  \item If there is a subparagraph ``a,'' there must be a subparagraph "b." % Both ``latex quotes'' and "standard quotes" are accepted.
     \begin{enumerate}
     \item Designate second subdivisions by numbers in parentheses; for example (1), (2), and (3) and indent by 1/2 inch as shown.
     \item Do not subdivide beyond the third subdivision.

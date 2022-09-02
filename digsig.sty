@@ -1,0 +1,150 @@
+%******************************************************************************
+% File:     @(#)$OrigId: digsig.sty,v 1.16 2015-06-07 08:57:00+02 martin Rel $
+% Contents: LaTeX macros for digital signature fields in PDF files
+% Author:   Martin Lottermoser, Braunschweig, Germany;
+%	    Martin.Lottermoser at t-online.de
+%
+%******************************************************************************
+%
+%	Copyright (C) 2005-2015 by Martin Lottermoser
+%	All rights reserved
+%
+%******************************************************************************
+%
+% This package is an extension of the "hyperref" package and depends on
+% internal interfaces and other properties of that package which are not
+% documented and hence might change without notice.
+%
+% To use this package, proceed as follows:
+% - Include "\usepackage{digsig}" in your document. If it has not happened yet,
+%   this call will also pull in the "hyperref" package. If you want to specify
+%   options in the \usepackage call for "hyperref", include that package before
+%   including "digsig".
+% - Call the macro \digsigfield to create one or more signature fields. The
+%   macro's interface is specified below before its definition.
+% - The region of your file where you call \digsigfield should be contained in
+%   hyperref's "Form" environment.
+% - For generating a PDF file, use either pdfTeX or configure hyperref for a
+%   DVI driver (e.g., dvips) for which hyperref supports the \pdfmark command.
+%   Using other configurations will not lead to signature fields; this package
+%   will issue warnings in this case.
+%
+% To insert a signature in a signature field, you will also need suitable
+% software and, of course, a key. Note that Adobe's free Acrobat Reader is
+% capable of signing a signature field in a normal PDF file only since
+% version 11.0.7 (May 2014).
+%
+%
+% License
+% =======
+% It cannot be applied exactly, but you should consider this file to be usable
+% in the spirit of the GNU Lesser General Public License, version 2.1
+% (LGPLv2.1; see http://www.gnu.org/licenses/lgpl-2.1.html). Basically, I do
+% not claim to have any rights in the documents you create with this software,
+% you don't have to distribute my macros with your documents, but if you copy
+% or modify the macros and offer this derived version for distribution you have
+% to do this under the same license and it must be apparent what you have
+% copied or modified.
+%
+% If you have questions concerning this license, contact me for clarification.
+%
+%******************************************************************************
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{digsig}[2015/06/07 Digital signature fields for PDF]
+
+%******************************************************************************
+
+% No options
+\ProcessOptions
+
+%******************************************************************************
+
+% We need the hyperref package.
+\RequirePackage{hyperref}
+
+%******************************************************************************
+
+% Macro \digsigfield for creating a PDF signature field, similar in effect to
+% hyperref's \TextField etc. macros. Its arguments are:
+%   #1: field width
+%   #2: field height
+%   #3: name of the field; may not contain periods ("."). This is not visible
+%	in the printed representation but is usually displayed in a PDF viewer
+%	capable of creating or verifying signatures. It depends on internals of
+%	the "hyperref" package what happens if you use characters outside the
+%	set of printable characters from ISO 646 (vulgo ASCII) or combining
+%	control sequences like '\"'. My advice is to first ignore this
+%	question, choose a sensible name encoded in your input encoding, and
+%	then check the name displayed by your PDF reader. Change and repeat
+%	until the result is more or less satisfactory :-).
+% From the point of view of TeX, the macro creates an empty box of the
+% specified extension with its reference point in the lower left corner.
+% Note that the macro does not change TeX's mode; if you want to enforce
+% horizontal mode for the environment the box is placed in, you will have to
+% take suitable steps yourself before calling the macro.
+%
+% Until it has been filled in, the field will only become visible in a PDF
+% viewer aware of signature fields. Signature-generating software will usually
+% create something to appear in the printed representation when you sign the
+% field. You can generate a signature field where the signature will not become
+% visible on the page by specifying a box of zero width and height. (This is
+% not as trivial as it sounds.) However, keep in mind that this field is only
+% invisible to the viewer; in terms of TeX, it's a box and may influence
+% formatting, in particular in the vertical modes.
+%
+% The following is an example of a call:
+%
+%   \begin{Form}
+%     \digsigfield{5cm}{2cm}{Author's signature}
+%   \end{Form}
+%
+\newcommand*{\digsigfield}[3]{\hbox{%
+  \pdfstringdef\Fld@name{#3}%
+  \def\Fld@align{1}%	Is this sensible? Do we need an option?
+  \Fld@hiddenfalse
+  \dimen255=#1\relax\ifdim\dimen255 < 2sp
+    \dimen255=#2\relax\ifdim\dimen255 < 2sp \Fld@hiddentrue \fi\fi
+    % No cheating with negative values! :-)
+  \setbox0=\hbox{\rule{0mm}{#2}\kern#1}%
+  % There has been an unfortunate (and in my opinion ill-considered) change
+  % between pdftex 1.10b and pdfetex 1.21a: while \pdfstartlink/\pdfendlink
+  % could formerly be called if \pdfoutput was zero, this is no longer
+  % permitted in the newer versions. Hence the following is needed twice:
+  \def\helper{\expandafter\ifx\csname pdfmark\endcsname\relax
+      \box0\PackageWarningNoLine{digsig}{No pdfmark support in selected
+	hyperref driver, hence no signature field ``\Fld@name''}%
+    \else
+      \pdfmark[\box0]{pdfmark=/ANN,Raw={\PDFFormExtension@Signature}}%
+    \fi
+  }%
+  \expandafter\ifx\csname pdfoutput\endcsname\relax
+    \helper
+  \else\ifnum\pdfoutput > 0
+    \pdfstartlink user {\PDFFormExtension@Signature}\box0\pdfendlink
+  \else
+    \helper
+  \fi\fi}}
+
+% Internal macro, similar to the \PDFForm@* macros of hyperref. The omission of
+% parameterization for "MK" is deliberate: if you need a border, create it with
+% TeX.
+\newcommand{\PDFFormExtension@Signature}{%
+  /T (\Fld@name)
+  /Subtype /Widget
+  /FT /Sig
+  /F \ifFld@hidden 2\else 4\fi\space
+  /Q \Fld@align\space
+  /MK << /BC [] >>}
+
+%******************************************************************************
+
+% Record version information for this package if possible
+{\expandafter\ifx\csname sourceidentification\endcsname\relax\else
+  \sourceidentification{\whatstring
+    $OrigId: digsig.sty,v 1.16 2015-06-07 08:57:00+02 martin Rel $}
+\fi}
+
+%******************************************************************************
+
+\endinput
