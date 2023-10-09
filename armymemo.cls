@@ -21,7 +21,7 @@
   }
   \am@putlogo%
   \dodheader%
-  \vspace*{2\baselineskip}
+  \vspace*{1\baselineskip}
 }
 
 % \typeout{===========>}\show\@enddocumenthook
@@ -426,6 +426,6 @@
   \noindent\am@officesymbol\hspace*{\fill}\am@signaturedate\\
   \am@memoline
   \vspace{\baselineskip}
-  \noindent\am@subject\\
+  \noindent\am@subject
+  \par
 }
-
