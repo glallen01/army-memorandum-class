@@ -1,8 +1,8 @@
 % Army memo class
 
-% George Allen base64(Z2xhbGxlbjAx) AT base64(Z21haWwuY29t)
+% https://github.com/glallen01/army-memorandum-class
 
-\ProvidesClass{armymemo}[2019/03/10 0.2.1 Army Memorandum Class]
+\ProvidesClass{armymemo}[2023/10/16 0.2.2 Army Memorandum Class]
 \NeedsTeXFormat{LaTeX2e}
 
 \LoadClass[
