@@ -47,6 +47,10 @@ The basic structure looks like:
 \subject[(U) ]{The creation of memos using \LaTeX}
 \authority{BY ORDER OF THE COMMANDER}                             % optional
 
+% AR 25-50 mandated Arial from 2013-2020.
+% The default is still Arial, but you can restore Times using:
+\setmainfont{Times New Roman}
+
 \begin{document}
 
 \begin{enumerate}
