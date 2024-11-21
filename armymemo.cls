@@ -406,7 +406,7 @@
   \ifnumcomp{\value{am@address@count}}{<}{2}{
     \address{Organizational Name/Title}
 	 \address{Standardized Street Address}
-	 \address{City, State, 12345-1234}
+	 \address{City, State~~12345-1234}
   }{}
   \thispagestyle{plain}%
   \begin{tikzpicture}[remember picture, overlay]%
