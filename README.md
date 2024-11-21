@@ -34,7 +34,9 @@ The basic structure looks like:
 
 \address{Organizational Name/Title}
 \address{Standardized Street Address}
-\address{CITY, STATE, 12345-1234}
+\address{CITY, STATE~~12345-1234}
+% AR 25-50 (10OCT2020) 5-10.b requires two spaces between state and zip.
+% this can be either ` \ ` to add two spaces, or `~~` to use two non-breaking spaces.
 
 \author{John W. Smith}\rank{CPT}\branch{CY}\title{S-3}            % optional
 \officesymbol{ABC-DEF-GH}
